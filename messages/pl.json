@@ -1,0 +1,122 @@
+{
+  "Nav": {
+    "home": "Strona Główna",
+    "products": "Produkty",
+    "contact": "Kontakt",
+    "cart": "Koszyk",
+    "wishlist": "Lista życzeń",
+    "account": "Konto",
+    "login": "Zaloguj się",
+    "register": "Zarejestruj się",
+    "logout": "Wyloguj się"
+  },
+  "Home": {
+    "featuredTitle": "Proponowane produkty",
+    "aboutTitle": "O nas",
+    "viewAll": "Zobacz wszystkie",
+    "heroSubtitle": "Wyjątkowe rękodzieło tworzone z sercem i pasją"
+  },
+  "Products": {
+    "title": "Produkty",
+    "search": "Szukaj produktów...",
+    "noResults": "Nie znaleziono produktów",
+    "addToCart": "Dodaj do koszyka",
+    "addToWishlist": "Dodaj do listy życzeń",
+    "removeFromWishlist": "Usuń z listy",
+    "filters": "Filtry",
+    "sortBy": "Sortuj",
+    "priceRange": "Zakres cen",
+    "category": "Kategoria",
+    "allCategories": "Wszystkie kategorie",
+    "newest": "Najnowsze",
+    "priceAsc": "Cena: od najniższej",
+    "priceDesc": "Cena: od najwyższej",
+    "popular": "Popularne",
+    "variants": "Warianty",
+    "stock": "Dostępność",
+    "inStock": "W magazynie",
+    "outOfStock": "Brak w magazynie"
+  },
+  "Cart": {
+    "title": "Koszyk",
+    "empty": "Twój koszyk jest pusty",
+    "total": "Suma",
+    "checkout": "Zamów",
+    "remove": "Usuń",
+    "goToCart": "Przejdź do koszyka",
+    "continueShopping": "Kontynuuj zakupy",
+    "addedToCart": "Dodano do koszyka",
+    "quantity": "Ilość",
+    "subtotal": "Wartość produktów"
+  },
+  "Checkout": {
+    "title": "Finalizacja zamówienia",
+    "shippingDetails": "Dane do wysyłki",
+    "name": "Imię i nazwisko",
+    "address": "Adres",
+    "city": "Miasto",
+    "postalCode": "Kod pocztowy",
+    "shippingMethod": "Metoda wysyłki",
+    "courier": "Kurier DPD (15,00 zł)",
+    "parcelLocker": "Paczkomat InPost (12,00 zł)",
+    "pickup": "Odbiór osobisty (0,00 zł)",
+    "summary": "Podsumowanie",
+    "shippingCost": "Koszt wysyłki",
+    "totalWithShipping": "Razem z wysyłką",
+    "pay": "Przejdź do płatności Stripe",
+    "successTitle": "Zamówienie opłacone pomyślnie!",
+    "successMessage": "Dziękujemy za zakup rękodzieła. Twoje zamówienie zostało przyjęte do realizacji."
+  },
+  "Wishlist": {
+    "title": "Lista życzeń",
+    "empty": "Twoja lista życzeń jest pusta",
+    "removeFromWishlist": "Usuń z listy",
+    "moveToCart": "Dodaj do koszyka"
+  },
+  "Account": {
+    "title": "Moje konto",
+    "profile": "Dane osobowe",
+    "orderHistory": "Historia zamówień",
+    "noOrders": "Brak zamówień w historii",
+    "orderNumber": "Numer zamówienia",
+    "date": "Data",
+    "status": "Status",
+    "amount": "Kwota",
+    "phone": "Numer telefonu",
+    "updateSuccess": "Dane zostały zaktualizowane"
+  },
+  "Auth": {
+    "loginTitle": "Zaloguj się do sklepu",
+    "registerTitle": "Załóż nowe konto",
+    "email": "Adres email",
+    "password": "Hasło",
+    "name": "Imię i nazwisko",
+    "loginButton": "Zaloguj się",
+    "registerButton": "Zarejestruj się",
+    "noAccount": "Nie masz jeszcze konta?",
+    "hasAccount": "Masz już konto?",
+    "invalidCredentials": "Nieprawidłowy adres email lub hasło"
+  },
+  "Contact": {
+    "title": "Kontakt",
+    "formTitle": "Napisz do nas",
+    "name": "Imię i nazwisko",
+    "email": "Twój email",
+    "subject": "Temat wiadomości",
+    "message": "Treść wiadomości",
+    "send": "Wyślij wiadomość",
+    "sent": "Wiadomość została wysłana pomyślnie!",
+    "addressTitle": "Pracownia Rękodzieła",
+    "addressDetails": "ul. Rękodzielnicza 12, 00-001 Warszawa"
+  },
+  "Common": {
+    "currency": "zł",
+    "loading": "Ładowanie...",
+    "error": "Wystąpił błąd",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "back": "Wróć"
+  }
+}

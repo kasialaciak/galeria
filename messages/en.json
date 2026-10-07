@@ -1,0 +1,122 @@
+{
+  "Nav": {
+    "home": "Home",
+    "products": "Products",
+    "contact": "Contact",
+    "cart": "Cart",
+    "wishlist": "Wishlist",
+    "account": "Account",
+    "login": "Log in",
+    "register": "Sign up",
+    "logout": "Log out"
+  },
+  "Home": {
+    "featuredTitle": "Featured Products",
+    "aboutTitle": "About Us",
+    "viewAll": "View all",
+    "heroSubtitle": "Unique handcrafted goods created with heart and passion"
+  },
+  "Products": {
+    "title": "Products",
+    "search": "Search products...",
+    "noResults": "No products found",
+    "addToCart": "Add to cart",
+    "addToWishlist": "Add to wishlist",
+    "removeFromWishlist": "Remove from wishlist",
+    "filters": "Filters",
+    "sortBy": "Sort by",
+    "priceRange": "Price range",
+    "category": "Category",
+    "allCategories": "All categories",
+    "newest": "Newest",
+    "priceAsc": "Price: low to high",
+    "priceDesc": "Price: high to low",
+    "popular": "Popular",
+    "variants": "Variants",
+    "stock": "Availability",
+    "inStock": "In stock",
+    "outOfStock": "Out of stock"
+  },
+  "Cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "goToCart": "Go to cart",
+    "continueShopping": "Continue shopping",
+    "addedToCart": "Added to cart",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal"
+  },
+  "Checkout": {
+    "title": "Checkout",
+    "shippingDetails": "Shipping details",
+    "name": "Full name",
+    "address": "Address",
+    "city": "City",
+    "postalCode": "Postal code",
+    "shippingMethod": "Shipping method",
+    "courier": "DPD Courier (15.00 PLN)",
+    "parcelLocker": "InPost Parcel Locker (12.00 PLN)",
+    "pickup": "Personal pickup (0.00 PLN)",
+    "summary": "Summary",
+    "shippingCost": "Shipping cost",
+    "totalWithShipping": "Total with shipping",
+    "pay": "Proceed to Stripe payment",
+    "successTitle": "Order placed successfully!",
+    "successMessage": "Thank you for supporting handcraft. Your order has been placed."
+  },
+  "Wishlist": {
+    "title": "Wishlist",
+    "empty": "Your wishlist is empty",
+    "removeFromWishlist": "Remove from wishlist",
+    "moveToCart": "Add to cart"
+  },
+  "Account": {
+    "title": "My Account",
+    "profile": "Profile details",
+    "orderHistory": "Order history",
+    "noOrders": "No orders yet",
+    "orderNumber": "Order number",
+    "date": "Date",
+    "status": "Status",
+    "amount": "Amount",
+    "phone": "Phone number",
+    "updateSuccess": "Profile updated successfully"
+  },
+  "Auth": {
+    "loginTitle": "Log in to your account",
+    "registerTitle": "Create a new account",
+    "email": "Email address",
+    "password": "Password",
+    "name": "Full name",
+    "loginButton": "Log in",
+    "registerButton": "Sign up",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "invalidCredentials": "Invalid email or password"
+  },
+  "Contact": {
+    "title": "Contact",
+    "formTitle": "Write to us",
+    "name": "Full name",
+    "email": "Your email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send message",
+    "sent": "Message sent successfully!",
+    "addressTitle": "Handcraft Workshop",
+    "addressDetails": "12 Handcraft Street, 00-001 Warsaw, Poland"
+  },
+  "Common": {
+    "currency": "PLN",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back"
+  }
+}
