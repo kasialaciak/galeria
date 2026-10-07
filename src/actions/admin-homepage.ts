@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { homepageContent } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
 export async function addCarouselSlideAction(formData: FormData) {
   const session = await auth();
@@ -13,8 +14,17 @@ export async function addCarouselSlideAction(formData: FormData) {
   }
 
   const imageUrl = formData.get("imageUrl") as string;
-  const titlePl = formData.get("titlePl") as string;
-  const descriptionPl = formData.get("descriptionPl") as string;
+  const rawData = {
+    titlePl: formData.get("titlePl"),
+    descriptionPl: formData.get("descriptionPl"),
+  };
+
+  const parsed = promoSchema.safeParse(rawData);
+  if (!parsed.success) {
+    return { success: false, error: "Nieprawidłowe dane formularza" };
+  }
+
+  const { titlePl, descriptionPl } = parsed.data;
   const linkUrl = formData.get("linkUrl") as string;
 
   if (!imageUrl) {
@@ -64,8 +74,17 @@ export async function updateAboutSectionAction(formData: FormData) {
     return { success: false, error: "Unauthorized" };
   }
 
-  const titlePl = formData.get("titlePl") as string;
-  const descriptionPl = formData.get("descriptionPl") as string;
+  const rawData = {
+    titlePl: formData.get("titlePl"),
+    descriptionPl: formData.get("descriptionPl"),
+  };
+
+  const parsed = promoSchema.safeParse(rawData);
+  if (!parsed.success) {
+    return { success: false, error: "Nieprawidłowe dane formularza" };
+  }
+
+  const { titlePl, descriptionPl } = parsed.data;
   const imageUrl = formData.get("imageUrl") as string;
 
   try {
@@ -99,6 +118,63 @@ export async function updateAboutSectionAction(formData: FormData) {
     return { success: true };
   } catch (error) {
     console.error("Error updating about section:", error);
+    return { success: false, error: "Błąd podczas zapisu sekcji" };
+  }
+}
+
+
+const promoSchema = z.object({
+  titlePl: z.string().min(1, "Tytuł jest wymagany"),
+  descriptionPl: z.string().min(1, "Opis jest wymagany"),
+});
+
+export async function updatePromoSectionAction(formData: FormData) {
+  const session = await auth();
+  if ((session?.user as any)?.role !== "admin") {
+    return { success: false, error: "Unauthorized" };
+  }
+
+  const rawData = {
+    titlePl: formData.get("titlePl"),
+    descriptionPl: formData.get("descriptionPl"),
+  };
+
+  const parsed = promoSchema.safeParse(rawData);
+  if (!parsed.success) {
+    return { success: false, error: "Nieprawidłowe dane formularza" };
+  }
+
+  const { titlePl, descriptionPl } = parsed.data;
+
+  try {
+    const existing = await db
+      .select()
+      .from(homepageContent)
+      .where(eq(homepageContent.section, "gallery_promo"))
+      .limit(1);
+
+    if (existing && existing.length > 0) {
+      await db
+        .update(homepageContent)
+        .set({
+          titlePl,
+          descriptionPl,
+        })
+        .where(eq(homepageContent.id, existing[0].id));
+    } else {
+      await db.insert(homepageContent).values({
+        section: "gallery_promo",
+        titlePl,
+        descriptionPl,
+        isActive: true,
+      });
+    }
+
+    revalidatePath("/admin/strona-glowna");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating promo section:", error);
     return { success: false, error: "Błąd podczas zapisu sekcji" };
   }
 }

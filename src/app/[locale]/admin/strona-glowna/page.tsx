@@ -5,11 +5,13 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { AddSlideForm } from "./add-slide-form";
 import { DeleteSlideButton } from "./delete-slide-button";
 import { EditAboutForm } from "./edit-about-form";
+import { EditPromoForm } from "./edit-promo-form";
 import Image from "next/image";
 
 export default async function AdminHomepagePage() {
   let slides: any[] = [];
   let aboutSection: any = null;
+  let promoSection: any = null;
 
   try {
     slides = await db
@@ -25,6 +27,14 @@ export default async function AdminHomepagePage() {
       .limit(1);
 
     aboutSection = about;
+
+    const [promo] = await db
+      .select()
+      .from(homepageContent)
+      .where(eq(homepageContent.section, "gallery_promo"))
+      .limit(1);
+    
+    promoSection = promo;
   } catch (e) {
     // fallback
   }
@@ -115,7 +125,7 @@ export default async function AdminHomepagePage() {
         </div>
       </div>
 
-      {/* 2. Sekcja O nas na dole strony głównej */}
+      {/* 2. Sekcja O nas na dole strony głownej */}
       <div className="space-y-6 pt-6 border-t border-warm-gray">
         <div>
           <h2 className="font-serif text-xl font-bold text-forest">
@@ -132,6 +142,27 @@ export default async function AdminHomepagePage() {
               initialTitle={aboutSection?.titlePl || ""}
               initialDescription={aboutSection?.descriptionPl || ""}
               initialImageUrl={aboutSection?.imageUrl || ""}
+            />
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* 3. Sekcja Promo Galerii */}
+      <div className="space-y-6 pt-6 border-t border-warm-gray">
+        <div>
+          <h2 className="font-serif text-xl font-bold text-forest">
+            3. Sekcja zachęcająca do Galerii
+          </h2>
+          <p className="text-xs text-charcoal/60 mt-0.5">
+            Zmieniaj tekst zachęcający do przejścia do galerii prac (sekcja widoczna przed sekcją "O nas").
+          </p>
+        </div>
+
+        <Card className="bg-white border-warm-gray shadow-xs max-w-3xl">
+          <CardContent className="p-6">
+            <EditPromoForm
+              initialTitle={promoSection?.titlePl || ""}
+              initialDescription={promoSection?.descriptionPl || ""}
             />
           </CardContent>
         </Card>

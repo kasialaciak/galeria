@@ -1,9 +1,31 @@
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Compass } from "lucide-react";
+import { Sparkles, Compass } from "lucide-react";
+import { useLocale } from "next-intl";
 
-export function GalleryPromoSection() {
+interface GalleryPromoSectionProps {
+  titlePl?: string | null;
+  titleEn?: string | null;
+  descriptionPl?: string | null;
+  descriptionEn?: string | null;
+}
+
+export function GalleryPromoSection({
+  titlePl,
+  titleEn,
+  descriptionPl,
+  descriptionEn,
+}: GalleryPromoSectionProps) {
+  const locale = useLocale();
+  const isPl = locale === "pl";
+
+  const defaultTitle = "Galeria naszych prac i kulisy pracowni";
+  const defaultDesc = "Odkryj autorskie projekty, niepowtarzalne zamówienia indywidualne oraz proces powstawania naszych wyrobów krok po kroku. Zobacz, jak kawałek gliny, srebra czy lnu zamienia się w małe dzieło sztuki.";
+
+  const displayTitle = isPl ? (titlePl || defaultTitle) : (titleEn || titlePl || defaultTitle);
+  const displayDesc = isPl ? (descriptionPl || defaultDesc) : (descriptionEn || descriptionPl || defaultDesc);
+
   const previewImages = [
     {
       src: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80",
@@ -23,26 +45,20 @@ export function GalleryPromoSection() {
   ];
 
   return (
-    <section className="bg-cream/60 border-t border-warm-gray py-16 sm:py-20">
+    <section className="bg-cream/60 py-16 sm:py-24 border-y border-warm-gray">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Tekst zachęcający */}
-          <div className="lg:col-span-5 space-y-5">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-teal">
-              <Sparkles className="h-4 w-4" />
-              Inspiracje & Rzemiosło
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-forest leading-tight">
-              Galeria naszych prac i kulisy pracowni
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+          <div className="lg:col-span-5 space-y-6">
+            <h2 className="font-serif text-3xl sm:text-4xl text-forest leading-tight">
+              {displayTitle}
             </h2>
-            <p className="text-charcoal/75 text-sm sm:text-base leading-relaxed">
-              Odkryj autorskie projekty, niepowtarzalne zamówienia indywidualne oraz proces powstawania naszych wyrobów krok po kroku. Zobacz, jak kawałek gliny, srebra czy lnu zamienia się w małe dzieło sztuki.
+            <p className="text-charcoal/80 text-base leading-relaxed whitespace-pre-wrap">
+              {displayDesc}
             </p>
-            <div className="pt-2">
-              <Button asChild size="lg" className="bg-forest hover:bg-forest/90 text-white font-medium text-xs sm:text-sm">
-                <Link href="/galeria" className="flex items-center gap-2">
-                  <span>Przejdź do Galerii prac</span>
-                  <ArrowRight className="h-4 w-4" />
+            <div className="pt-4">
+              <Button asChild size="lg" className="bg-forest hover:bg-forest/90 text-white rounded-none px-8 font-medium">
+                <Link href="/galeria">
+                  Przejdź do galerii prac
                 </Link>
               </Button>
             </div>
