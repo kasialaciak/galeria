@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { Heart, ShoppingBag, User } from "lucide-react";
@@ -34,7 +34,7 @@ export function Header({ storeEnabled = true }: HeaderProps) {
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* LEWA STRONA: Hamburger menu */}
           <div className="flex items-center gap-3">
-            <MobileMenu storeEnabled={storeEnabled} />
+            <MobileMenu storeEnabled={storeEnabled} isGalleryPage={isGalleryPage} />
           </div>
 
           <div className="flex items-center gap-1 sm:gap-2">
@@ -68,16 +68,7 @@ export function Header({ storeEnabled = true }: HeaderProps) {
               </>
             )}
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-charcoal hover:text-forest hover:bg-sage/40 transition-colors"
-              asChild
-            >
-              <Link href="/konto" aria-label={t("account")}>
-                <User className="h-5 w-5" />
-              </Link>
-            </Button>
+            {!isGalleryPage && (<Button variant="ghost" size="icon" className="text-charcoal hover:text-forest hover:bg-sage/40 transition-colors" asChild><Link href="/konto" aria-label={t("account")}><User className="h-5 w-5" /></Link></Button>)}
 
             <div className="ml-2 pl-2 border-l border-warm-gray">
               <LocaleSwitcher />
@@ -89,3 +80,5 @@ export function Header({ storeEnabled = true }: HeaderProps) {
     </>
   );
 }
+
+

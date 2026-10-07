@@ -25,7 +25,7 @@ export function GalleryClient({ categories, works, carousel, description }: any)
   return (
     <div className="space-y-12">
       {/* Navbar / Back to shop */}
-      <div className="container mx-auto px-4 pt-12 pb-6 flex flex-col items-center justify-center relative"><h1 className="text-4xl md:text-5xl font-serif font-bold text-forest text-center tracking-tight mb-6">Galeria Prac</h1><Link href="/sklep" className="absolute left-4 top-12 hidden md:block"><Button variant="outline" className="gap-2 rounded-full border-forest/20 hover:bg-forest/5 text-forest"><ArrowLeft className="h-4 w-4" /> Przejdź do sklepu</Button></Link><Link href="/sklep" className="md:hidden mb-4"><Button variant="outline" className="gap-2 rounded-full border-forest/20 hover:bg-forest/5 text-forest w-full"><ArrowLeft className="h-4 w-4" /> Przejdź do sklepu</Button></Link></div>
+      <div className="container mx-auto px-4 pt-12 pb-6 flex flex-col items-center justify-center relative"><h1 className="text-4xl md:text-5xl font-serif font-bold text-forest text-center tracking-tight mb-6">Galeria Prac</h1></div>
 
       {/* Carousel */}
       {carousel.length > 0 && (
@@ -156,4 +156,5 @@ export function GalleryClient({ categories, works, carousel, description }: any)
     </div>
   );
 }
+
 

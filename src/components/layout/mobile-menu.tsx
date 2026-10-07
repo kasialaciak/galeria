@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -14,11 +14,11 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { Logo } from "./logo";
 
-type MobileMenuProps = {
+type MobileMenuProps = { isGalleryPage?: boolean;
   storeEnabled?: boolean;
 };
 
-export function MobileMenu({ storeEnabled = true }: MobileMenuProps) {
+export function MobileMenu({ storeEnabled = true, isGalleryPage = false }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
   const t = useTranslations("Nav");
 
@@ -31,8 +31,7 @@ export function MobileMenu({ storeEnabled = true }: MobileMenuProps) {
     { href: "/kontakt" as const, label: t("contact") },
   ];
 
-  return (
-    <Sheet open={open} onOpenChange={setOpen}>
+  if (isGalleryPage) { return (<Button variant="ghost" size="icon" className="text-charcoal hover:text-forest hover:bg-sage/40 transition-colors" asChild><Link href="/sklep" aria-label="Sklep"><Menu className="h-6 w-6" /></Link></Button>); } return (<Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
@@ -68,3 +67,5 @@ export function MobileMenu({ storeEnabled = true }: MobileMenuProps) {
     </Sheet>
   );
 }
+
+
