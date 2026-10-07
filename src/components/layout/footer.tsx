@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+﻿import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { Logo } from "./logo";
 import { getSettings } from "@/lib/settings";
@@ -14,12 +14,7 @@ export async function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <div className="mb-3">
-              <Logo size={32} />
-            </div>
-            <p className="text-sm text-charcoal/70 leading-relaxed max-w-sm">
-              ZamĂłwienia robione rÄ™cznie, z sercem i pasjÄ….
-            </p>
+            <ConditionalFooterLinks><div className="mb-3"><Logo size={32} /></div><p className="text-sm text-charcoal/70 leading-relaxed max-w-sm">Zamówienia robione ręcznie, z sercem i pasją.</p></ConditionalFooterLinks>
             <div className="flex items-center gap-3 mt-4">
               {settings.instagramUrl && (
                 <a
@@ -97,3 +92,4 @@ export async function Footer() {
     </footer>
   );
 }
+

@@ -1,11 +1,1 @@
-﻿import Image from "next/image";
-
-export function Logo({ size = 36 }: { size?: number }) {
-  // PodmieĹ„ public/logo.svg wĹ‚asnym kwadratowym logo (ta sama nazwa pliku).
-  return (
-    <span className="flex items-center gap-2">
-      <Image src="/logo.svg" alt="Kasia Łaciak â€“ logo" width={size} height={size} className="rounded-md" priority />
-      <span className="font-serif text-xl font-bold text-forest">Kasia Łaciak</span>
-    </span>
-  );
-}
+﻿export function Logo({ size = 36 }: { size?: number }) { return (<span className="flex items-center gap-2"><svg width={size} height={size} viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#D2B4DE" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.6,90,-16.3,87.4,-1.5C84.7,13.3,76.8,26.6,67.3,38.2C57.7,49.8,46.4,59.8,33.5,67.6C20.5,75.4,5.8,81,-8.2,79.5C-22.3,77.9,-35.8,69.2,-48.8,60.1C-61.9,50.9,-74.5,41.4,-81.9,28.4C-89.2,15.3,-91.3,-1.2,-86.6,-15.6C-81.9,-30,-70.5,-42.2,-57.9,-51.9C-45.3,-61.6,-31.6,-68.8,-17.8,-73.6C-4,-78.4,10.1,-80.7,23.3,-78.1C36.4,-75.4,44.7,-76.4,44.7,-76.4Z" transform="translate(100 100)" /></svg><span className="font-serif text-xl font-bold text-forest">Kasia Łaciak</span></span>); }
