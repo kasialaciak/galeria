@@ -2,44 +2,44 @@
 
 @layer base {
   :root {
-    --background: 40 33% 97%;
-    --foreground: 30 8% 16%;
+    --background: 44 60% 98%; /* Buttery light cream */
+    --foreground: 270 12% 23%; /* Dark plum charcoal */
 
     --card: 0 0% 100%;
-    --card-foreground: 30 8% 16%;
+    --card-foreground: 270 12% 23%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 30 8% 16%;
+    --popover-foreground: 270 12% 23%;
 
-    --primary: 162 48% 21%;
-    --primary-foreground: 40 33% 97%;
+    --primary: 275 17% 42%; /* #6C597E - Darker violet */
+    --primary-foreground: 44 60% 98%;
 
-    --secondary: 169 39% 39%;
+    --secondary: 275 22% 65%; /* #A895B8 */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 147 20% 93%;
-    --muted-foreground: 30 8% 40%;
+    --muted: 275 20% 95%;
+    --muted-foreground: 270 12% 40%;
 
-    --accent: 19 50% 53%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 348 43% 81%; /* #E4BCC4 - pastel pink */
+    --accent-foreground: 270 12% 23%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 34 20% 88%;
-    --input: 34 20% 88%;
-    --ring: 162 48% 21%;
+    --border: 44 30% 90%;
+    --input: 44 30% 90%;
+    --ring: 275 17% 42%;
 
-    --radius: 0.5rem;
+    --radius: 1rem; /* Slightly more rounded for organic feel */
 
-    /* Custom palette colors */
-    --color-cream: #FAF7F2;
-    --color-charcoal: #2D2A26;
-    --color-forest: #1B4D3E;
-    --color-teal: #3D8B7A;
-    --color-clay: #C4704A;
-    --color-warm-gray: #E8E2DA;
-    --color-sage: #E8F0EC;
+    /* Custom palette colors keeping old variable names for compatibility */
+    --color-cream: #FFFDF7;
+    --color-charcoal: #3A3342;
+    --color-forest: #7E6B93; /* Violet-pink / Fiołkowy róż */
+    --color-teal: #A895B8;
+    --color-clay: #E4BCC4;
+    --color-warm-gray: #F4EFEA;
+    --color-sage: #FCF5DE; /* Masłkowy / Butter */
   }
 }
 
@@ -60,4 +60,13 @@ body {
   background-color: var(--color-cream);
   color: var(--color-charcoal);
   font-family: var(--font-sans);
+}
+
+/* Subtle spotted pattern (łaciate elementy) */
+.bg-spotted {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 12C20 10 25 15 22 20C18 25 10 22 15 12ZM45 40C52 38 55 45 50 50C45 55 38 52 45 40ZM10 45C15 48 12 55 8 52C5 50 5 42 10 45ZM48 10C50 15 42 18 45 10C47 5 45 5 48 10Z' fill='%237E6B93' fill-opacity='0.04' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.blob-shape {
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
 }
