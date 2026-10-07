@@ -23,6 +23,30 @@ export function SettingsForm({ initialData }: { initialData: SiteSettings }) {
     <form action={formAction} className="space-y-8">
       <Card>
         <CardHeader>
+          <CardTitle className="text-lg font-serif text-forest">Status Sklepu</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center space-x-2">
+            <input 
+              type="checkbox" 
+              id="storeEnabled" 
+              name="storeEnabled" 
+              value="true"
+              defaultChecked={initialData.storeEnabled === "true"} 
+              className="h-4 w-4 rounded border-warm-gray text-forest focus:ring-forest"
+            />
+            <label htmlFor="storeEnabled" className="text-sm font-medium">
+              Sklep widoczny dla klientów
+            </label>
+          </div>
+          <p className="text-xs text-charcoal/60 mt-1">
+            Gdy wyłączone, linki do sklepu znikną, a dostęp do koszyka i produktów będzie zablokowany.
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle className="text-lg font-serif text-forest">Kontakt i social media</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">

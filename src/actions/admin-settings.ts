@@ -42,6 +42,7 @@ export async function updateSettings(
     sellerNip: formData.get("sellerNip"),
     shippingDays: formData.get("shippingDays"),
     holidayDates: formData.get("holidayDates"),
+    storeEnabled: formData.get("storeEnabled") || "false",
   };
 
   const parsed = settingsSchema.safeParse(rawData);

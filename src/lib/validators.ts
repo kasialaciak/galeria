@@ -102,4 +102,5 @@ export const settingsSchema = z.object({
   sellerNip: z.string().regex(/^(\d{10})?$/, 'NIP: 10 cyfr lub puste'),
   shippingDays: z.string().regex(/^\d{1,3}$/),
   holidayDates: z.string().optional(),
+  storeEnabled: z.string().optional(),
 });
