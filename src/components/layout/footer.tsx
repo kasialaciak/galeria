@@ -78,7 +78,7 @@ export async function Footer() {
               </li>
               <li>
                 <Link href="/polityka-prywatnosci" className="hover:text-forest transition-colors">
-                  Polityka prywatnoĹ›ci
+                  Polityka prywatności
                 </Link>
               </li>
             </ul>
@@ -86,10 +86,12 @@ export async function Footer() {
           </ConditionalFooterLinks>
         </div>
         <div className="mt-8 pt-6 border-t border-warm-gray/60 text-center text-xs text-charcoal/50">
-          &copy; {new Date().getFullYear()} Kasia Łaciak. Wszelkie prawa zastrzeĹĽone.
+          &copy; {new Date().getFullYear()} Kasia Łaciak. Wszelkie prawa zastrzeżone.
         </div>
       </div>
     </footer>
   );
 }
+
+
 
