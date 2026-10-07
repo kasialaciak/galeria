@@ -1,4 +1,4 @@
-"use server";
+﻿"use server";
 
 import { db } from "@/db";
 import { contactMessages } from "@/db/schema";
@@ -32,7 +32,7 @@ export async function sendContactMessage(prevState: any, formData: FormData) {
     });
 
     const settings = await getSettings();
-    const adminEmail = settings.contactEmail || "cosmic.loop.core+shoop@gmail.com";
+    const adminEmail = settings.contactEmail || "kasialaciak.gallery+shoop@gmail.com";
     
     await sendMail({
       to: adminEmail,
@@ -52,3 +52,4 @@ export async function sendContactMessage(prevState: any, formData: FormData) {
     return { success: true };
   }
 }
+

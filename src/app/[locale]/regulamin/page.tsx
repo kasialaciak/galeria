@@ -1,9 +1,9 @@
-import { Card, CardContent } from "@/components/ui/card";
+﻿import { Card, CardContent } from "@/components/ui/card";
 
 export default function RegulaminPage() {
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="font-serif text-3xl font-bold text-forest mb-6">Regulamin Sklepu "Cosmic Loop"</h1>
+      <h1 className="font-serif text-3xl font-bold text-forest mb-6">Regulamin Sklepu "Kasia Łaciak"</h1>
       
       <Card>
         <CardContent className="p-8 prose prose-sm sm:prose-base max-w-none text-charcoal/80">
@@ -13,7 +13,7 @@ export default function RegulaminPage() {
           
           <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">1. Postanowienia ogólne</h2>
           <p>
-            Niniejszy regulamin określa zasady dokonywania zakupów w sklepie internetowym Cosmic Loop.
+            Niniejszy regulamin określa zasady dokonywania zakupów w sklepie internetowym Kasia Łaciak.
             Sklep zajmuje się sprzedażą rękodzieła wykonywanego na zamówienie.
           </p>
 
@@ -59,3 +59,4 @@ export default function RegulaminPage() {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+﻿import nodemailer from "nodemailer";
 
 export async function sendMail(m: {
   to: string; subject: string; html: string; text: string; replyTo?: string;
@@ -15,9 +15,9 @@ export async function sendMail(m: {
       auth: { user, pass },
     });
     await transporter.sendMail({
-      from: `"Cosmic Loop" <${process.env.MAIL_FROM || user}>`,
+      from: `"Kasia Łaciak" <${process.env.MAIL_FROM || user}>`,
       to: m.to,
-      replyTo: m.replyTo || "cosmic.loop.core+shoop@gmail.com",
+      replyTo: m.replyTo || "kasialaciak.gallery+shoop@gmail.com",
       subject: m.subject,
       html: m.html,
       text: m.text,
@@ -25,6 +25,7 @@ export async function sendMail(m: {
     return { ok: true };
   } catch (e) {
     console.error("sendMail failed:", e);
-    return { ok: false, error: "Nie udało się wysłać e-maila" };
+    return { ok: false, error: "Nie udaĹ‚o siÄ™ wysĹ‚aÄ‡ e-maila" };
   }
 }
+

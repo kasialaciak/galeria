@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { formatPrice } from "@/lib/utils";
 import { db } from "@/db";
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
             const [order] = await db.select().from(orders).where(eq(orders.id, orderId));
             if (order) {
               const settings = await getSettings();
-              const adminEmail = settings.contactEmail || "cosmic.loop.core+shoop@gmail.com";
+              const adminEmail = settings.contactEmail || "kasialaciak.gallery+shoop@gmail.com";
               const mail = adminNewOrderEmail({
                 orderNumber: order.orderNumber,
                 totalStr: formatPrice(order.totalAmount),
@@ -89,3 +89,4 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ received: true }, { status: 200 });
 }
+

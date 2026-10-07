@@ -4,7 +4,6 @@ import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Providers } from "@/components/providers";
-import { DeliveryBanner } from "@/components/layout/delivery-banner";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { CookieBanner } from "@/components/layout/cookie-banner";
@@ -13,12 +12,12 @@ import "../globals.css";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Cosmic Loop",
-    default: "Cosmic Loop | Ręcznie robione na zamówienie",
+    template: "%s | Kasia Łaciak",
+    default: "Kasia Łaciak | Ręcznie robione na zamówienie",
   },
-  description: "Sklep internetowy Cosmic Loop. Każdy produkt robiony ręcznie na zamówienie: szydełko, biżuteria z modeliny i gliny, ceramika.",
+  description: "Sklep internetowy Kasia Łaciak. Każdy produkt robiony ręcznie na zamówienie: szydełko, biżuteria z modeliny i gliny, ceramika.",
   openGraph: {
-    siteName: "Cosmic Loop",
+    siteName: "Kasia Łaciak",
   }
 };
 
@@ -56,7 +55,6 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className="min-h-screen flex flex-col bg-cream font-sans text-charcoal antialiased">
         <Providers>
           <NextIntlClientProvider locale={locale}>
-            <DeliveryBanner />
             <Header storeEnabled={storeEnabled} />
             <main className="flex-1">{children}</main>
             <Footer />
@@ -68,3 +66,4 @@ export default async function LocaleLayout({ children, params }: Props) {
     </html>
   );
 }
+

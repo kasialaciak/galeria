@@ -3,6 +3,7 @@ import { Link } from "@/i18n/routing";
 import { Logo } from "./logo";
 import { getSettings } from "@/lib/settings";
 import { Camera, Mail } from "lucide-react";
+import { ConditionalFooterLinks } from "./conditional-footer-links";
 
 export async function Footer() {
   const t = await getTranslations("Nav");
@@ -17,7 +18,7 @@ export async function Footer() {
               <Logo size={32} />
             </div>
             <p className="text-sm text-charcoal/70 leading-relaxed max-w-sm">
-              Zamówienia robione ręcznie, z sercem i pasją.
+              ZamĂłwienia robione rÄ™cznie, z sercem i pasjÄ….
             </p>
             <div className="flex items-center gap-3 mt-4">
               {settings.instagramUrl && (
@@ -42,6 +43,7 @@ export async function Footer() {
               )}
             </div>
           </div>
+          <ConditionalFooterLinks>
           <div>
             <h4 className="font-serif font-semibold text-charcoal mb-3">
               Szybkie linki
@@ -81,14 +83,15 @@ export async function Footer() {
               </li>
               <li>
                 <Link href="/polityka-prywatnosci" className="hover:text-forest transition-colors">
-                  Polityka prywatności
+                  Polityka prywatnoĹ›ci
                 </Link>
               </li>
             </ul>
           </div>
+          </ConditionalFooterLinks>
         </div>
         <div className="mt-8 pt-6 border-t border-warm-gray/60 text-center text-xs text-charcoal/50">
-          &copy; {new Date().getFullYear()} Cosmic Loop. Wszelkie prawa zastrzeżone.
+          &copy; {new Date().getFullYear()} Kasia Łaciak. Wszelkie prawa zastrzeĹĽone.
         </div>
       </div>
     </footer>

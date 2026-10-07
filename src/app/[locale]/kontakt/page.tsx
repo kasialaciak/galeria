@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+﻿import { getTranslations } from "next-intl/server";
 import { ContactClientForm } from "./contact-client-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, CalendarDays, Sparkles } from "lucide-react";
@@ -32,7 +32,7 @@ export default async function ContactPage() {
   }
 
   // Sanityzacja danych kontaktowych
-  const safeEmail = (settings.contactEmail || "cosmic.loop.core+shoop@gmail.com").replace(/[^a-zA-Z0-9@.+_-]/g, "");
+  const safeEmail = (settings.contactEmail || "kasialaciak.gallery+shoop@gmail.com").replace(/[^a-zA-Z0-9@.+_-]/g, "");
   const safePhone = settings.contactPhone ? settings.contactPhone.replace(/[^\d+]/g, "") : "";
 
   return (
@@ -55,7 +55,7 @@ export default async function ContactPage() {
           <Card className="bg-white border-warm-gray shadow-xs">
             <CardContent className="p-6 space-y-6">
               <h3 className="font-serif text-xl font-bold text-forest border-b border-warm-gray pb-3">
-                Cosmic Loop
+                Kasia Łaciak
               </h3>
 
               <div className="space-y-4 text-xs sm:text-sm text-charcoal/80">
@@ -97,7 +97,7 @@ export default async function ContactPage() {
                       href={`mailto:${safeEmail}`}
                       className="text-forest hover:underline"
                     >
-                      {settings.contactEmail || "cosmic.loop.core+shoop@gmail.com"}
+                      {settings.contactEmail || "kasialaciak.gallery+shoop@gmail.com"}
                     </a>
                   </div>
                 </div>
@@ -155,3 +155,5 @@ export default async function ContactPage() {
     </div>
   );
 }
+
+

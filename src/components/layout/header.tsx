@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Heart, ShoppingBag, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 import { LocaleSwitcher } from "./locale-switcher";
@@ -19,6 +19,8 @@ export function Header({ storeEnabled = true }: HeaderProps) {
   const t = useTranslations("Nav");
   const { totalItems, setIsOpen } = useCart();
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
+  const isGalleryPage = pathname === "/" || pathname === "/pl" || pathname === "/en";
 
   useEffect(() => {
     setMounted(true);
@@ -30,19 +32,13 @@ export function Header({ storeEnabled = true }: HeaderProps) {
     <>
       <header className="sticky top-0 z-40 w-full border-b border-warm-gray bg-white/95 backdrop-blur-md transition-all shadow-xs">
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          {/* LEWA STRONA: Logo sklepu oraz obok ikonka 3 kresek (rozwijane menu) */}
+          {/* LEWA STRONA: Hamburger menu */}
           <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="hover:opacity-90 transition-opacity"
-            >
-              <Logo size={40} />
-            </Link>
             <MobileMenu storeEnabled={storeEnabled} />
           </div>
 
           <div className="flex items-center gap-1 sm:gap-2">
-            {storeEnabled && (
+            {storeEnabled && !isGalleryPage && (
               <>
                 <Button
                   variant="ghost"

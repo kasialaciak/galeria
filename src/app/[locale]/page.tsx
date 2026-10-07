@@ -16,7 +16,7 @@ export default async function GalleryPage() {
   const description = await getGalleryDescription();
 
   return (
-    <main className="min-h-screen bg-background pb-20">
+    <main className="min-h-screen bg-background bg-spotted pb-20">
       <GalleryClient 
         categories={categories}
         works={works}

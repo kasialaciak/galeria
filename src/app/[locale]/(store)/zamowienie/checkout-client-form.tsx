@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
@@ -356,7 +356,7 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
                   <Store className="h-5 w-5 text-forest" />
                   <div>
                     <p className="text-sm font-semibold text-charcoal">{t("pickup")}</p>
-                    <p className="text-xs text-charcoal/60">Cosmic Loop (ustalane indywidualnie)</p>
+                    <p className="text-xs text-charcoal/60">Kasia Łaciak (ustalane indywidualnie)</p>
                   </div>
                 </div>
                 <span className="text-sm font-bold text-forest">0,00 zł</span>
@@ -505,3 +505,4 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
     </form>
   );
 }
+

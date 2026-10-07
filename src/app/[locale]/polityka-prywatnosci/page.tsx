@@ -1,9 +1,9 @@
-import { Card, CardContent } from "@/components/ui/card";
+﻿import { Card, CardContent } from "@/components/ui/card";
 
 export default function PrivacyPolicyPage() {
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="font-serif text-3xl font-bold text-forest mb-6">Polityka Prywatności "Cosmic Loop"</h1>
+      <h1 className="font-serif text-3xl font-bold text-forest mb-6">Polityka Prywatności "Kasia Łaciak"</h1>
       
       <Card>
         <CardContent className="p-8 prose prose-sm sm:prose-base max-w-none text-charcoal/80">
@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
 
           <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">1. Administrator danych osobowych</h2>
           <p>
-            Administratorem Twoich danych osobowych jest sklep Cosmic Loop. Zbieramy dane wyłącznie w celu 
+            Administratorem Twoich danych osobowych jest sklep Kasia Łaciak. Zbieramy dane wyłącznie w celu 
             prawidłowej realizacji usług, zamówień oraz prowadzenia konta klienta.
           </p>
 
@@ -56,3 +56,4 @@ export default function PrivacyPolicyPage() {
     </div>
   );
 }
+
