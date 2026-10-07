@@ -39,6 +39,9 @@ export default async function LocaleLayout({ children, params }: Props) {
   }
 
   setRequestLocale(locale);
+  const { getSettings } = await import("@/lib/settings");
+  const settings = await getSettings();
+  const storeEnabled = settings.storeEnabled !== "false";
 
   return (
     <html lang={locale}>
@@ -54,7 +57,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <Providers>
           <NextIntlClientProvider locale={locale}>
             <DeliveryBanner />
-            <Header />
+            <Header storeEnabled={storeEnabled} />
             <main className="flex-1">{children}</main>
             <Footer />
             <CookieBanner />

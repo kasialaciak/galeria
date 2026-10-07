@@ -14,14 +14,20 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { Logo } from "./logo";
 
-export function MobileMenu() {
+type MobileMenuProps = {
+  storeEnabled?: boolean;
+};
+
+export function MobileMenu({ storeEnabled = true }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
   const t = useTranslations("Nav");
 
   const links = [
-    { href: "/" as const, label: t("home") },
-    { href: "/produkty" as const, label: t("products") },
-    { href: "/galeria" as const, label: "Galeria prac" },
+    { href: "/" as const, label: "Galeria" },
+    ...(storeEnabled ? [
+      { href: "/sklep" as const, label: "Sklep" },
+      { href: "/produkty" as const, label: t("products") }
+    ] : []),
     { href: "/kontakt" as const, label: t("contact") },
   ];
 

@@ -10,17 +10,19 @@ export type SiteSettings = {
   sellerNip: string;
   shippingDays: string;
   holidayDates: string;
+  storeEnabled: string;
 };
 
 export const DEFAULT_SETTINGS: SiteSettings = {
-  contactEmail: "cosmic.loop.core+shoop@gmail.com",
+  contactEmail: "kasialaciak.gallery@gmail.com",
   contactPhone: "",
-  instagramUrl: "https://www.instagram.com/cosmic_loop.craft/",
+  instagramUrl: "",
   sellerName: "",
   sellerAddress: "",
   sellerNip: "",
   shippingDays: "21",
   holidayDates: "",
+  storeEnabled: "true",
 };
 
 export async function getSettings(): Promise<SiteSettings> {

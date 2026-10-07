@@ -11,7 +11,11 @@ import { LocaleSwitcher } from "./locale-switcher";
 import { CartDrawer } from "./cart-drawer";
 import { useCart } from "@/hooks/use-cart";
 
-export function Header() {
+type HeaderProps = {
+  storeEnabled?: boolean;
+};
+
+export function Header({ storeEnabled = true }: HeaderProps) {
   const t = useTranslations("Nav");
   const { totalItems, setIsOpen } = useCart();
   const [mounted, setMounted] = useState(false);
@@ -34,40 +38,40 @@ export function Header() {
             >
               <Logo size={40} />
             </Link>
-            <MobileMenu />
+            <MobileMenu storeEnabled={storeEnabled} />
           </div>
 
-          {/* PRAWA STRONA: 3 ikonki (serce, koszyk, profil) + przełącznik języka */}
           <div className="flex items-center gap-1 sm:gap-2">
-            {/* Ikona serca -> Lista życzeń */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-charcoal hover:text-clay hover:bg-sage/40 transition-colors"
-              asChild
-            >
-              <Link href="/lista-zyczen" aria-label={t("wishlist")}>
-                <Heart className="h-5 w-5" />
-              </Link>
-            </Button>
+            {storeEnabled && (
+              <>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-charcoal hover:text-clay hover:bg-sage/40 transition-colors"
+                  asChild
+                >
+                  <Link href="/lista-zyczen" aria-label={t("wishlist")}>
+                    <Heart className="h-5 w-5" />
+                  </Link>
+                </Button>
 
-            {/* Ikona koszyka z liczbą sztuk -> otwiera koszyk */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative text-charcoal hover:text-forest hover:bg-sage/40 transition-colors"
-              onClick={() => setIsOpen(true)}
-              aria-label={t("cart")}
-            >
-              <ShoppingBag className="h-5 w-5" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-clay px-1 text-[11px] font-bold text-white shadow-xs animate-in zoom-in-50">
-                  {cartCount}
-                </span>
-              )}
-            </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative text-charcoal hover:text-forest hover:bg-sage/40 transition-colors"
+                  onClick={() => setIsOpen(true)}
+                  aria-label={t("cart")}
+                >
+                  <ShoppingBag className="h-5 w-5" />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-1 -right-1 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-clay px-1 text-[11px] font-bold text-white shadow-xs animate-in zoom-in-50">
+                      {cartCount}
+                    </span>
+                  )}
+                </Button>
+              </>
+            )}
 
-            {/* Ikona profilu -> Konto */}
             <Button
               variant="ghost"
               size="icon"
