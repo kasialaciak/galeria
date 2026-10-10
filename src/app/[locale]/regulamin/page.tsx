@@ -6,7 +6,7 @@ export default async function RegulaminPage({ params }: { params: Promise<{ loca
   if (locale === "en") {
     return (
       <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <h1 className="font-serif text-3xl font-bold text-forest mb-6">"Cosmic Loop" Store Terms of Service</h1>
+        <h1 className="font-serif text-3xl font-bold text-forest mb-6">"Kasia Łaciak" Terms of Service</h1>
         
         <Card>
           <CardContent className="p-8 prose prose-sm sm:prose-base max-w-none text-charcoal/80">
@@ -16,7 +16,7 @@ export default async function RegulaminPage({ params }: { params: Promise<{ loca
             
             <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">1. General Provisions</h2>
             <p>
-              These terms of service define the rules for making purchases in the Cosmic Loop online store.
+              These terms of service define the rules for making purchases in the Kasia Łaciak online store.
               The store sells handcrafted items made to order.
             </p>
 
@@ -48,6 +48,10 @@ export default async function RegulaminPage({ params }: { params: Promise<{ loca
               If the ordered goods arrive damaged or have defects, the Customer has the right to file a complaint by sending 
               a message to our contact address, attaching proof in the form of photos.
             </p>
+
+            <div className="mt-8 p-4 bg-cream/50 rounded-lg text-sm">
+              <p><strong>Note:</strong> The above text is only a draft (template) of the terms of service. It should be supplemented with the seller's full details and consulted regarding legal requirements.</p>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -56,7 +60,7 @@ export default async function RegulaminPage({ params }: { params: Promise<{ loca
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="font-serif text-3xl font-bold text-forest mb-6">Regulamin Sklepu "Cosmic Loop"</h1>
+      <h1 className="font-serif text-3xl font-bold text-forest mb-6">Regulamin Sklepu "Kasia Łaciak"</h1>
       
       <Card>
         <CardContent className="p-8 prose prose-sm sm:prose-base max-w-none text-charcoal/80">
@@ -66,7 +70,7 @@ export default async function RegulaminPage({ params }: { params: Promise<{ loca
           
           <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">1. Postanowienia ogólne</h2>
           <p>
-            Niniejszy regulamin określa zasady dokonywania zakupów w sklepie internetowym Cosmic Loop.
+            Niniejszy regulamin określa zasady dokonywania zakupów w sklepie internetowym Kasia Łaciak.
             Sklep zajmuje się sprzedażą rękodzieła wykonywanego na zamówienie.
           </p>
 
@@ -102,6 +106,11 @@ export default async function RegulaminPage({ params }: { params: Promise<{ loca
             Jeżeli zamówiony towar dotarł uszkodzony lub posiada wady, Klient ma prawo złożyć reklamację, wysyłając 
             wiadomość na nasz adres kontaktowy, załączając dowód w postaci zdjęć.
           </p>
+
+          <div className="mt-8 p-4 bg-cream/50 rounded-lg text-sm">
+            <p><strong>Uwaga:</strong> Powyższy tekst stanowi jedynie zarys (wzór) regulaminu. Należy go uzupełnić 
+            o pełne dane sprzedawcy (NIP, REGON, Adres firmy) i skonsultować pod kątem wymogów prawnych.</p>
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -23,21 +23,21 @@ export function MobileMenu({ storeEnabled = true, isGalleryPage = false }: Mobil
   const t = useTranslations("Nav");
 
   const links = [
-    { href: "/" as const, label: "Galeria" },
+    { href: "/" as const, label: t("gallery", { fallback: "Galeria" }) },
     ...(storeEnabled ? [
-      { href: "/sklep" as const, label: "Sklep" },
+      { href: "/sklep" as const, label: t("shop", { fallback: "Sklep" }) },
       { href: "/produkty" as const, label: t("products") }
     ] : []),
     { href: "/kontakt" as const, label: t("contact") },
   ];
 
-  if (isGalleryPage) { return (<Button variant="ghost" size="icon" className="text-charcoal hover:text-forest hover:bg-sage/40 transition-colors" asChild><Link href="/sklep" aria-label="Sklep"><Menu className="h-6 w-6" /></Link></Button>); } return (<Sheet open={open} onOpenChange={setOpen}>
+  if (isGalleryPage) { return (<Button variant="ghost" size="icon" className="text-charcoal hover:text-forest hover:bg-sage/40 transition-colors" asChild><Link href="/sklep" aria-label={t("shop", { fallback: "Sklep" })}><Menu className="h-6 w-6" /></Link></Button>); } return (<Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
           size="icon"
           className="text-charcoal hover:text-forest hover:bg-sage/40 transition-colors"
-          aria-label="Rozwiń menu"
+          aria-label={t("openMenu", { fallback: "Rozwiń menu" })}
         >
           <Menu className="h-6 w-6" />
         </Button>
@@ -48,7 +48,7 @@ export function MobileMenu({ storeEnabled = true, isGalleryPage = false }: Mobil
             <Logo size={32} />
           </SheetTitle>
           <p className="text-xs text-charcoal/60">
-            Unikatowe, ręcznie tworzone przedmioty
+            {t("subtitle", { fallback: "Unikatowe, ręcznie tworzone przedmioty" })}
           </p>
         </SheetHeader>
         <nav className="mt-8 flex flex-col gap-5">
