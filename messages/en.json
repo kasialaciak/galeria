@@ -8,7 +8,10 @@
     "account": "Account",
     "login": "Log in",
     "register": "Sign up",
-    "logout": "Log out"
+    "logout": "Log out",
+    "gallery": "Gallery",
+    "subtitle": "Unique, handcrafted items",
+    "openMenu": "Open menu"
   },
   "Home": {
     "featuredTitle": "Featured Products",
@@ -35,7 +38,16 @@
     "variants": "Variants",
     "stock": "Availability",
     "inStock": "In stock",
-    "outOfStock": "Out of stock"
+    "outOfStock": "Out of stock",
+    "foundCount": "Found: {count} products",
+    "categoryLabel": "Category",
+    "tryChangingFilters": "Try changing keywords or resetting category filters.",
+    "searchPlaceholder": "Search by keywords...",
+    "searchButton": "Search",
+    "sortNewest": "Newest",
+    "sortPopular": "Most popular",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low"
   },
   "Cart": {
     "title": "Cart",
@@ -65,7 +77,50 @@
     "totalWithShipping": "Total with shipping",
     "pay": "Proceed to Stripe payment",
     "successTitle": "Order placed successfully!",
-    "successMessage": "Thank you for supporting handcraft. Your order has been placed."
+    "successMessage": "Thank you for supporting handcraft. Your order has been placed.",
+    "couponTitle": "Discount coupon",
+    "couponAdded": "Coupon added!",
+    "couponError": "Error verifying coupon",
+    "couponServerError": "Server error",
+    "discountApplied": "Discount applied",
+    "remove": "Remove",
+    "yourCode": "Your code...",
+    "add": "Add",
+    "termsError": "You must accept the terms of service to place an order.",
+    "email": "Email *",
+    "phone": "Phone *",
+    "phonePlaceholder": "e.g. +48 500 123 456",
+    "pickupInfo": "Personal pickup selected – delivery address is not required.",
+    "customerNotes": "Order notes (optional)",
+    "customerNotesPlaceholder": "Write here if you have special requests regarding colors or details...",
+    "parcelLockerDesc": "Delivery within 24-48h to selected parcel locker",
+    "parcelLockerCode": "Parcel Locker Code *",
+    "findLocker": "Find parcel locker",
+    "parcelLockerPlaceholder": "e.g. WAW123M",
+    "courierDesc": "Courier delivery directly to your door",
+    "pickupDesc": "Cosmic Loop (individually arranged)",
+    "pickupWarning": "Important: For personal pickup, please contact the seller to arrange a pickup time.",
+    "subtotalLabel": "Subtotal:",
+    "discountLabel": "Discount ({code}):",
+    "shippingLabel": "Delivery ({method}):",
+    "totalLabel": "Total to pay:",
+    "termsPrefix": "I accept the",
+    "termsLink": "Store Terms of Service",
+    "termsMiddle": "and agree to the",
+    "privacyLink": "Privacy Policy",
+    "termsSuffix": ". I understand that custom-made goods made to my specifications may have limited or excluded return policies, in accordance with the terms of service. *",
+    "connectingPayment": "Connecting to payment gateway...",
+    "orderAndPay": "Order and Pay",
+    "paymentInfo": "Payment by card or BLIK. Data is fully encrypted by Stripe.",
+    "cartEmptyTitle": "Your cart is empty",
+    "cartEmptyDesc": "Add products to your cart to proceed to checkout.",
+    "backToShop": "Back to shop",
+    "subtitle": "A step before secure payment via Stripe",
+    "shippingCountry": "Delivery country *",
+    "euCourier": "International shipping (EU)",
+    "euCourierDesc": "International courier",
+    "invalidPaczkomat": "The specified parcel locker code does not exist.",
+    "validatingPaczkomat": "Validating locker..."
   },
   "Wishlist": {
     "title": "Wishlist",
@@ -83,7 +138,35 @@
     "status": "Status",
     "amount": "Amount",
     "phone": "Phone number",
-    "updateSuccess": "Profile updated successfully"
+    "updateSuccess": "Profile updated successfully",
+    "loggedInAs": "Logged in as:",
+    "adminPanel": "Admin Panel",
+    "security": "Security - Change Password",
+    "discoverProducts": "Discover products in shop",
+    "shipping": "Shipping:",
+    "addressLabel": "Address:",
+    "statusPaid": "Paid",
+    "statusShipped": "Shipped",
+    "statusDelivered": "Delivered",
+    "statusCancelled": "Cancelled",
+    "statusPending": "Awaiting payment",
+    "emailLabel": "Email address (login)",
+    "nameLabel": "Full name",
+    "namePlaceholder": "Your full name",
+    "phoneLabel": "Phone number",
+    "phonePlaceholder": "+48 123 456 789",
+    "saveChanges": "Save changes",
+    "saving": "Saving...",
+    "profileUpdated": "Profile details updated",
+    "errorOccurred": "An error occurred",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "changePassword": "Change password",
+    "changing": "Changing...",
+    "passwordChanged": "Password successfully changed",
+    "passwordMismatch": "New passwords do not match",
+    "logout": "Log out"
   },
   "Auth": {
     "loginTitle": "Log in to your account",
@@ -107,7 +190,23 @@
     "send": "Send message",
     "sent": "Message sent successfully!",
     "addressTitle": "Handcraft Workshop",
-    "addressDetails": "12 Handcraft Street, 00-001 Warsaw, Poland"
+    "addressDetails": "12 Handcraft Street, 00-001 Warsaw, Poland",
+    "invite": "Feel free to contact us",
+    "subtitle": "Want to ask about a custom order, variant availability, or collaboration? Write to us.",
+    "instagram": "Visit us on Instagram",
+    "directEmail": "Write directly",
+    "callUs": "Call us",
+    "workingDays": "Working days",
+    "monToFri": "Monday - Friday",
+    "holidays": "Upcoming holidays:",
+    "none": "None",
+    "customOrders": "We also fulfill unique custom orders upon request!",
+    "replyTime": "We usually reply within 24 business hours.",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "your@email.com",
+    "subjectPlaceholder": "What is this regarding?",
+    "messagePlaceholder": "Write your message...",
+    "sending": "Sending..."
   },
   "Common": {
     "currency": "PLN",
@@ -118,5 +217,108 @@
     "delete": "Delete",
     "edit": "Edit",
     "back": "Back"
+  },
+  "Gallery": {
+    "title": "Gallery",
+    "backToShop": "Back to shop",
+    "all": "All",
+    "noWorks": "No works in this category.",
+    "close": "Close",
+    "toShop": "To Shop"
+  },
+  "HeroCarousel": {
+    "discoverCollection": "Discover collection",
+    "bannerAlt": "Handicraft banner",
+    "prevSlide": "Previous slide",
+    "nextSlide": "Next slide"
+  },
+  "ProductTabs": {
+    "reviewsTab": "Customer Reviews",
+    "specsTab": "Product Specifications",
+    "from5Stars": "out of 5 stars",
+    "totalReviews": "Total reviews:",
+    "verifiedNotice": "All reviews are from verified customers who purchased this product.",
+    "wantToReview": "Want to add a review?",
+    "loginToReview": "Log in to your account",
+    "reviewOnlyBuyers": "Reviews can only be added by customers after purchasing this product.",
+    "reviewOnlyVerified": "Reviews can only be added by verified customers after purchase.",
+    "noReviews": "No reviews for this product",
+    "beTheFirst": "Be the first to share your experience after purchasing!",
+    "buyer": "Buyer",
+    "noSpecs": "No additional specification details",
+    "specsInfo": "Information about materials and craftsmanship can be found in the description above."
+  },
+  "ProductPage": {
+    "backToProducts": "Back to all products",
+    "madeToOrder": "Made to order (up to {days} working days)",
+    "aboutProduct": "About product",
+    "handmade": "100% handmade",
+    "noRatings": "No ratings",
+    "reviews_one": "review",
+    "reviews_few": "reviews",
+    "reviews_many": "reviews"
+  },
+  "ProductCard": {
+    "handicraft": "Handicraft",
+    "sale": "Sale",
+    "bestseller": "Bestseller",
+    "variants": "{count} variants",
+    "madeToOrder": "Made to order • up to {days} working days",
+    "removedFromWishlist": "{name} removed from wishlist",
+    "addedToWishlist": "{name} added to wishlist"
+  },
+  "FeaturedProducts": {
+    "selected": "Selected"
+  },
+  "AboutSection": {
+    "visitWorkshop": "Visit our workshop"
+  },
+  "GalleryPromoSection": {
+    "goToGallery": "Go to gallery",
+    "images": {
+      "img1Alt": "Artistic ceramics",
+      "img1Label": "Ceramic studio",
+      "img2Alt": "Handmade jewelry",
+      "img2Label": "Natural stones",
+      "img3Alt": "Crafting process",
+      "img3Label": "Behind the scenes"
+    }
+  },
+  "DeliveryBanner": {
+    "message": "Every product is handmade to order - processing and shipping time up to {days} working days."
+  },
+  "Footer": {
+    "description": "Handmade orders, made with heart and passion.",
+    "quickLinks": "Quick links",
+    "information": "Information",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "rights": "All rights reserved."
+  },
+  "Countries": {
+    "PL": "Poland",
+    "DE": "Germany",
+    "CZ": "Czech Republic",
+    "SK": "Slovakia",
+    "LT": "Lithuania",
+    "LV": "Latvia",
+    "EE": "Estonia",
+    "AT": "Austria",
+    "FR": "France",
+    "IT": "Italy",
+    "ES": "Spain",
+    "NL": "Netherlands",
+    "BE": "Belgium",
+    "DK": "Denmark",
+    "SE": "Sweden",
+    "FI": "Finland"
+  },
+  "Cookies": {
+    "title": "Cookies",
+    "description": "We use cookies to ensure the proper functioning of the shopping cart and login. You can also accept analytical cookies that will help us improve the store. You can find details in our",
+    "privacyLink": "Privacy Policy",
+    "acceptAll": "Accept all",
+    "acceptEssential": "Essential only",
+    "close": "Close"
   }
 }

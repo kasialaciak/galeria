@@ -1,58 +1,46 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { useRouter } from "@/i18n/routing";
-import { createProductAction } from "@/actions/admin-products";
+import { updateProductAction } from "@/actions/admin-products";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
 
-interface ProductNewFormProps {
+interface ProductEditFormProps {
+  product: any; // Bierzemy any dla uproszczenia
   categories: { id: string; namePl: string }[];
   parentProducts: { id: string; namePl: string }[];
+  productImages: { url: string }[];
 }
 
-export function ProductNewForm({
+export function ProductEditForm({
+  product,
   categories,
   parentProducts,
-}: ProductNewFormProps) {
+  productImages,
+}: ProductEditFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [specs, setSpecs] = useState<{ label: string; value: string }[]>([
-    { label: "Wymiary", value: "" },
-    { label: "Materiał", value: "" },
-  ]);
-
-  const handleAddSpec = () => {
-    setSpecs([...specs, { label: "", value: "" }]);
-  };
-
-  const handleRemoveSpec = (index: number) => {
-    setSpecs(specs.filter((_, i) => i !== index));
-  };
-
-  const handleSpecChange = (index: number, field: "label" | "value", val: string) => {
-    const updated = [...specs];
-    updated[index][field] = val;
-    setSpecs(updated);
-  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
     startTransition(async () => {
-      const res = await createProductAction(formData);
+      const res = await updateProductAction(product.id, formData);
       if (res.success) {
-        toast.success("Produkt został pomyślnie dodany!");
+        toast.success("Produkt został pomyślnie zaktualizowany!");
         router.push("/admin/produkty");
       } else {
         toast.error(res.error || "Wystąpił błąd");
       }
     });
   };
+
+  const imagesText = productImages.map((img) => img.url).join("\n");
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -71,6 +59,7 @@ export function ProductNewForm({
                 id="namePl"
                 name="namePl"
                 required
+                defaultValue={product.namePl}
                 placeholder="np. Ceramiczna misa w kolorze mchu"
               />
             </div>
@@ -82,6 +71,7 @@ export function ProductNewForm({
               <Input
                 id="nameEn"
                 name="nameEn"
+                defaultValue={product.nameEn}
                 placeholder="np. Moss green ceramic bowl"
               />
             </div>
@@ -96,6 +86,7 @@ export function ProductNewForm({
               name="descriptionPl"
               required
               rows={3}
+              defaultValue={product.descriptionPl}
               placeholder="Opisz materiały, sposób wykonania, wymiary i charakter rękodzieła..."
               className="flex w-full rounded-md border border-warm-gray bg-white px-3 py-2 text-xs text-charcoal shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-forest"
             />
@@ -109,6 +100,7 @@ export function ProductNewForm({
               id="descriptionEn"
               name="descriptionEn"
               rows={3}
+              defaultValue={product.descriptionEn}
               placeholder="English description..."
               className="flex w-full rounded-md border border-warm-gray bg-white px-3 py-2 text-xs text-charcoal shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-forest"
             />
@@ -126,6 +118,7 @@ export function ProductNewForm({
                 step="0.01"
                 min="0"
                 required
+                defaultValue={(product.price / 100).toFixed(2)}
                 placeholder="149.00"
               />
             </div>
@@ -140,6 +133,7 @@ export function ProductNewForm({
                 type="number"
                 step="0.01"
                 min="0"
+                defaultValue={product.compareAtPrice ? (product.compareAtPrice / 100).toFixed(2) : ""}
                 placeholder="189.00"
               />
             </div>
@@ -162,6 +156,7 @@ export function ProductNewForm({
               <select
                 id="categoryId"
                 name="categoryId"
+                defaultValue={product.categoryId || "none"}
                 className="flex h-10 w-full rounded-md border border-warm-gray bg-white px-3 py-2 text-xs text-charcoal focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-forest cursor-pointer"
               >
                 <option value="none">-- Wybierz kategorię --</option>
@@ -180,6 +175,7 @@ export function ProductNewForm({
               <select
                 id="parentProductId"
                 name="parentProductId"
+                defaultValue={product.parentProductId || "none"}
                 className="flex h-10 w-full rounded-md border border-warm-gray bg-white px-3 py-2 text-xs text-charcoal focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-forest cursor-pointer"
               >
                 <option value="none">-- Produkt główny (samodzielny) --</option>
@@ -200,6 +196,7 @@ export function ProductNewForm({
               <Input
                 id="variantLabelPl"
                 name="variantLabelPl"
+                defaultValue={product.variantLabelPl || ""}
                 placeholder="np. Kolor: Butelkowa zieleń lub Rozmiar: M"
               />
             </div>
@@ -211,87 +208,11 @@ export function ProductNewForm({
               <Input
                 id="variantLabelEn"
                 name="variantLabelEn"
+                defaultValue={product.variantLabelEn || ""}
                 placeholder="e.g. Color: Forest Green"
               />
             </div>
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Kafelki specyfikacji produktu */}
-      <Card className="bg-white border-warm-gray shadow-xs">
-        <CardContent className="p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-warm-gray pb-3">
-            <div>
-              <h2 className="font-serif text-lg font-bold text-forest">
-                Specyfikacja produktu (Kafelki)
-              </h2>
-              <p className="text-[11px] text-charcoal/60">
-                Dodaj dowolne cechy, wymiary, skład lub sposób pielęgnacji, które wyświetlą się w kafelkach.
-              </p>
-            </div>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={handleAddSpec}
-              className="text-xs text-forest border-forest/30 hover:bg-forest/5"
-            >
-              + Dodaj cechę
-            </Button>
-          </div>
-
-          <input
-            type="hidden"
-            name="specifications"
-            value={JSON.stringify(specs.filter((s) => s.label.trim() || s.value.trim()))}
-          />
-
-          {specs.length === 0 ? (
-            <div className="text-center py-6 text-xs text-charcoal/50 border border-dashed border-warm-gray rounded-lg">
-              Brak dodanych cech. Kliknij &quot;+ Dodaj cechę&quot;, aby dodać kafelki (np. Wymiary, Materiał, Waga).
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {specs.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 p-3 bg-cream/40 rounded-lg border border-warm-gray/60">
-                  <div className="flex-1 space-y-1">
-                    <label className="text-[10px] font-semibold text-charcoal/70 uppercase">
-                      Nazwa cechy (np. Wymiary / Skład)
-                    </label>
-                    <Input
-                      placeholder="np. Wymiary"
-                      value={item.label}
-                      onChange={(e) => handleSpecChange(idx, "label", e.target.value)}
-                      className="bg-white text-xs h-8"
-                    />
-                  </div>
-                  <div className="flex-1 space-y-1">
-                    <label className="text-[10px] font-semibold text-charcoal/70 uppercase">
-                      Wartość cechy (np. 15 cm x 10 cm / 100% len)
-                    </label>
-                    <Input
-                      placeholder="np. 18 cm x 12 cm"
-                      value={item.value}
-                      onChange={(e) => handleSpecChange(idx, "value", e.target.value)}
-                      className="bg-white text-xs h-8"
-                    />
-                  </div>
-                  <div className="pt-4">
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRemoveSpec(idx)}
-                      className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 px-2 text-xs"
-                    >
-                      Usuń
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
         </CardContent>
       </Card>
 
@@ -310,6 +231,7 @@ export function ProductNewForm({
               id="imageUrls"
               name="imageUrls"
               rows={4}
+              defaultValue={imagesText}
               placeholder="https://images.unsplash.com/photo-...&#10;https://images.unsplash.com/photo-..."
               className="flex w-full rounded-md border border-warm-gray bg-white px-3 py-2 text-xs font-mono text-charcoal shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-forest"
             />
@@ -332,7 +254,7 @@ export function ProductNewForm({
               <input
                 type="checkbox"
                 name="isPublished"
-                defaultChecked
+                defaultChecked={product.isPublished}
                 className="h-4 w-4 rounded border-warm-gray text-forest focus:ring-forest"
               />
               <span>Opublikowany (widoczny w sklepie dla klientów)</span>
@@ -342,6 +264,7 @@ export function ProductNewForm({
               <input
                 type="checkbox"
                 name="isFeatured"
+                defaultChecked={product.isFeatured}
                 className="h-4 w-4 rounded border-warm-gray text-forest focus:ring-forest"
               />
               <span>Proponowany produkt (bestseller na stronie głównej)</span>
@@ -355,6 +278,7 @@ export function ProductNewForm({
             <Input
               id="workTime"
               name="workTime"
+              defaultValue={product.workTime || ""}
               className="mt-1.5 max-w-sm"
               placeholder="np. 2h, 1.5h, 30 min..."
             />
@@ -376,7 +300,7 @@ export function ProductNewForm({
           className="bg-forest hover:bg-forest/90 text-white font-medium px-8"
         >
           <Save className="h-4 w-4 mr-2" />
-          <span>{isPending ? "Zapisywanie produktu..." : "Zapisz i opublikuj"}</span>
+          <span>{isPending ? "Zapisywanie..." : "Zapisz zmiany"}</span>
         </Button>
       </div>
     </form>

@@ -4,6 +4,7 @@ import { useRouter, usePathname } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -12,6 +13,7 @@ export function ProductFilters() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const t = useTranslations("Products");
 
   const currentSearch = searchParams.get("szukaj") || "";
   const currentSort = searchParams.get("sortuj") || "newest";
@@ -49,7 +51,7 @@ export function ProductFilters() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-charcoal/40" />
             <Input
               type="text"
-              placeholder="Szukaj po słowach kluczowych..."
+              placeholder={t("searchPlaceholder")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-9 pr-8 bg-cream/50 border-warm-gray text-sm"
@@ -70,7 +72,7 @@ export function ProductFilters() {
             disabled={isPending}
             className="bg-forest hover:bg-forest/90 text-white shrink-0"
           >
-            Szukaj
+            {t("searchButton")}
           </Button>
         </form>
 
@@ -78,7 +80,7 @@ export function ProductFilters() {
         <div className="flex items-center gap-3 w-full md:w-auto justify-end">
           <div className="flex items-center gap-1.5 text-xs text-charcoal/60 font-medium">
             <SlidersHorizontal className="h-3.5 w-3.5" />
-            <span>Sortuj:</span>
+            <span>{t("sortBy")}:</span>
           </div>
 
           <select
@@ -86,10 +88,10 @@ export function ProductFilters() {
             onChange={(e) => applyFilter("sortuj", e.target.value)}
             className="h-9 rounded-md border border-warm-gray bg-cream/50 px-3 py-1 text-xs text-charcoal focus:outline-none focus:ring-1 focus:ring-forest cursor-pointer"
           >
-            <option value="newest">Najnowsze</option>
-            <option value="popular">Najpopularniejsze</option>
-            <option value="price-asc">Cena: rosnąco</option>
-            <option value="price-desc">Cena: malejąco</option>
+            <option value="newest">{t("sortNewest")}</option>
+            <option value="popular">{t("sortPopular")}</option>
+            <option value="price-asc">{t("sortPriceAsc")}</option>
+            <option value="price-desc">{t("sortPriceDesc")}</option>
           </select>
         </div>
       </div>

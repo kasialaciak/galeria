@@ -46,7 +46,8 @@ export const checkoutSchema = z
     shippingAddress: z.string().optional().default(""),
     shippingCity: z.string().optional().default(""),
     shippingPostalCode: z.string().optional().default(""),
-    shippingMethod: z.enum(["kurier", "paczkomat", "odbior"]),
+    shippingCountry: z.string().default("PL"),
+    shippingMethod: z.enum(["kurier", "paczkomat", "odbior", "eu_courier"]),
     shippingPhone: z.string().min(5, "Telefon jest wymagany"),
     shippingPaczkomat: z.string().nullish(),
   })
@@ -59,6 +60,22 @@ export const checkoutSchema = z
           path: ["shippingPaczkomat"],
         });
       }
+    }
+
+    if (data.shippingCountry !== "PL" && data.shippingMethod !== "eu_courier") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Dla wysyłki zagranicznej wybierz opcję 'Przesyłka zagraniczna (UE)'",
+        path: ["shippingMethod"],
+      });
+    }
+
+    if (data.shippingCountry === "PL" && data.shippingMethod === "eu_courier") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Dla wysyłki w Polsce wybierz inną opcję dostawy",
+        path: ["shippingMethod"],
+      });
     }
 
     if (data.shippingMethod !== "odbior") {
@@ -76,10 +93,10 @@ export const checkoutSchema = z
           path: ["shippingCity"],
         });
       }
-      if (!data.shippingPostalCode || !/^\d{2}-\d{3}$/.test(data.shippingPostalCode)) {
+      if (!data.shippingPostalCode || !/^\d{2,10}[-\s]?\d{0,10}$/.test(data.shippingPostalCode)) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "Kod pocztowy w formacie XX-XXX",
+          message: "Podaj prawidłowy kod pocztowy",
           path: ["shippingPostalCode"],
         });
       }
@@ -102,5 +119,4 @@ export const settingsSchema = z.object({
   sellerNip: z.string().regex(/^(\d{10})?$/, 'NIP: 10 cyfr lub puste'),
   shippingDays: z.string().regex(/^\d{1,3}$/),
   holidayDates: z.string().optional(),
-  storeEnabled: z.string().optional(),
 });

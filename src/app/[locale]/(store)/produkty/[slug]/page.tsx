@@ -20,8 +20,9 @@ type Props = {
 };
 
 export default async function ProductDetailPage({ params }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const t = await getTranslations("Products");
+  const tPage = await getTranslations("ProductPage");
   const settings = await getSettings();
 
   let product: any = null;
@@ -116,8 +117,8 @@ export default async function ProductDetailPage({ params }: Props) {
     ];
   }
 
-  const name = product.namePl;
-  const description = product.descriptionPl;
+  const name = locale === "en" ? product.nameEn : product.namePl;
+  const description = locale === "en" ? product.descriptionEn : product.descriptionPl;
   const specifications = Array.isArray(product.specifications) ? product.specifications : [];
 
   // Pobierz opinie produktu i uprawnienia użytkownika
@@ -133,7 +134,7 @@ export default async function ProductDetailPage({ params }: Props) {
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-charcoal/60 hover:text-forest transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Wróć do wszystkich produktów</span>
+          <span>{tPage("backToProducts")}</span>
         </Link>
       </div>
 
@@ -148,7 +149,7 @@ export default async function ProductDetailPage({ params }: Props) {
           <div>
             {category && (
               <span className="text-xs font-semibold uppercase tracking-wider text-teal">
-                {category.namePl}
+                {locale === "en" ? category.nameEn : category.namePl}
               </span>
             )}
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-forest mt-1 leading-tight">
@@ -170,10 +171,10 @@ export default async function ProductDetailPage({ params }: Props) {
                 ))}
               </div>
               <span className="font-bold text-xs text-charcoal">
-                {averageRating > 0 ? averageRating.toFixed(1) : "Brak ocen"}
+                {averageRating > 0 ? averageRating.toFixed(1) : tPage("noRatings")}
               </span>
               <span className="text-xs text-charcoal/50">
-                ({totalReviews} {totalReviews === 1 ? "opinia" : totalReviews > 1 && totalReviews < 5 ? "opinie" : "opinii"})
+                ({totalReviews} {totalReviews === 1 ? tPage("reviews_one") : totalReviews > 1 && totalReviews < 5 ? tPage("reviews_few") : tPage("reviews_many")})
               </span>
             </div>
           </div>
@@ -189,7 +190,7 @@ export default async function ProductDetailPage({ params }: Props) {
               </span>
             )}
             <Badge variant="sage" className="ml-2 text-xs font-normal">
-              Robione na zamówienie (do {settings.shippingDays} dni roboczych)
+              {tPage("madeToOrder", { days: settings.shippingDays })}
             </Badge>
           </div>
 
@@ -207,14 +208,14 @@ export default async function ProductDetailPage({ params }: Props) {
               price: product.price,
               imageUrl: images[0]?.url || "",
               slug: product.slug,
-              variantLabel: product.variantLabelPl,
+              variantLabel: locale === "en" ? product.variantLabelEn : product.variantLabelPl,
             }}
           />
 
           {/* Opis produktu */}
           <div className="pt-6 border-t border-warm-gray space-y-3">
             <h3 className="font-serif text-lg font-semibold text-charcoal">
-              O produkcie
+              {tPage("aboutProduct")}
             </h3>
             <p className="text-sm sm:text-base text-charcoal/80 leading-relaxed whitespace-pre-line">
               {description}
@@ -224,7 +225,7 @@ export default async function ProductDetailPage({ params }: Props) {
           <div className="pt-6 border-t border-warm-gray/60 text-sm text-charcoal/80">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-forest shrink-0" />
-              <span>Tworzone w 100% ręcznie</span>
+              <span>{tPage("handmade")}</span>
             </div>
           </div>
 

@@ -140,7 +140,9 @@ export default async function AdminHomepagePage() {
           <CardContent className="p-6">
             <EditAboutForm
               initialTitle={aboutSection?.titlePl || ""}
+              initialTitleEn={aboutSection?.titleEn || ""}
               initialDescription={aboutSection?.descriptionPl || ""}
+              initialDescriptionEn={aboutSection?.descriptionEn || ""}
               initialImageUrl={aboutSection?.imageUrl || ""}
             />
           </CardContent>
@@ -162,7 +164,9 @@ export default async function AdminHomepagePage() {
           <CardContent className="p-6">
             <EditPromoForm
               initialTitle={promoSection?.titlePl || ""}
+              initialTitleEn={promoSection?.titleEn || ""}
               initialDescription={promoSection?.descriptionPl || ""}
+              initialDescriptionEn={promoSection?.descriptionEn || ""}
             />
           </CardContent>
         </Card>

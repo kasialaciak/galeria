@@ -10,12 +10,16 @@ import { Save } from "lucide-react";
 
 interface EditPromoFormProps {
   initialTitle: string;
+  initialTitleEn?: string;
   initialDescription: string;
+  initialDescriptionEn?: string;
 }
 
 export function EditPromoForm({
   initialTitle,
+  initialTitleEn,
   initialDescription,
+  initialDescriptionEn,
 }: EditPromoFormProps) {
   const [isPending, startTransition] = useTransition();
 
@@ -49,6 +53,18 @@ export function EditPromoForm({
       </div>
 
       <div className="space-y-1.5">
+        <label htmlFor="titleEn" className="text-xs font-semibold text-charcoal">
+          Tytuł sekcji (EN)
+        </label>
+        <Input
+          id="titleEn"
+          name="titleEn"
+          defaultValue={initialTitleEn || ""}
+          className="text-xs"
+        />
+      </div>
+
+      <div className="space-y-1.5">
         <label htmlFor="descriptionPl" className="text-xs font-semibold text-charcoal">
           Opis sekcji (PL) *
         </label>
@@ -57,6 +73,19 @@ export function EditPromoForm({
           name="descriptionPl"
           defaultValue={initialDescription || "Odkryj autorskie projekty, niepowtarzalne zamówienia indywidualne oraz proces powstawania naszych wyrobów krok po kroku. Zobacz, jak kawałek gliny, srebra czy lnu zamienia się w małe dzieło sztuki."}
           required
+          rows={4}
+          className="text-xs resize-none"
+        />
+      </div>
+
+      <div className="space-y-1.5">
+        <label htmlFor="descriptionEn" className="text-xs font-semibold text-charcoal">
+          Opis sekcji (EN)
+        </label>
+        <Textarea
+          id="descriptionEn"
+          name="descriptionEn"
+          defaultValue={initialDescriptionEn || ""}
           rows={4}
           className="text-xs resize-none"
         />

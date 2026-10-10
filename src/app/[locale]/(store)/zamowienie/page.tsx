@@ -19,7 +19,7 @@ export default async function CheckoutPage() {
           {t("title")}
         </h1>
         <p className="text-xs text-charcoal/60 mt-1">
-          Krok przed bezpieczną płatnością przez Stripe
+          {t("subtitle")}
         </p>
       </div>
 

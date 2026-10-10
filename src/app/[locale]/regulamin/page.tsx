@@ -1,9 +1,62 @@
-﻿import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
-export default function RegulaminPage() {
+export default async function RegulaminPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+
+  if (locale === "en") {
+    return (
+      <div className="container mx-auto px-4 py-12 max-w-4xl">
+        <h1 className="font-serif text-3xl font-bold text-forest mb-6">"Cosmic Loop" Store Terms of Service</h1>
+        
+        <Card>
+          <CardContent className="p-8 prose prose-sm sm:prose-base max-w-none text-charcoal/80">
+            <p className="mb-4">
+              <em>Last updated: {new Date().toLocaleDateString("en-US")}</em>
+            </p>
+            
+            <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">1. General Provisions</h2>
+            <p>
+              These terms of service define the rules for making purchases in the Cosmic Loop online store.
+              The store sells handcrafted items made to order.
+            </p>
+
+            <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">2. Custom-Made Goods</h2>
+            <p>
+              All products presented in the store (crochet, clay/polymer clay jewelry, ceramics) 
+              are handmade to individual customer order.
+            </p>
+
+            <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">3. Processing Time and Delivery</h2>
+            <p>
+              Due to the handcrafted nature of the items, standard processing and shipping preparation time 
+              is up to 21 working days. We make every effort to ship your order as quickly as possible.
+            </p>
+
+            <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">4. Right of Withdrawal (Returns)</h2>
+            <p>
+              In accordance with consumer law, the right to withdraw from a contract concluded outside the business premises or at a distance is not available to the consumer in respect of contracts where the subject of the service is a <strong>non-prefabricated item, manufactured to the consumer's specifications or serving to satisfy their individualized needs</strong>. Therefore, returns of goods made to individual orders are not possible, except when the product has hidden defects (complaint).
+            </p>
+            
+            <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">5. Payments</h2>
+            <p>
+              Online transaction settlements are carried out via the Stripe payment system. 
+              Until the order is paid for, it remains unconfirmed.
+            </p>
+            
+            <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">6. Complaints</h2>
+            <p>
+              If the ordered goods arrive damaged or have defects, the Customer has the right to file a complaint by sending 
+              a message to our contact address, attaching proof in the form of photos.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="font-serif text-3xl font-bold text-forest mb-6">Regulamin Sklepu "Kasia Łaciak"</h1>
+      <h1 className="font-serif text-3xl font-bold text-forest mb-6">Regulamin Sklepu "Cosmic Loop"</h1>
       
       <Card>
         <CardContent className="p-8 prose prose-sm sm:prose-base max-w-none text-charcoal/80">
@@ -13,7 +66,7 @@ export default function RegulaminPage() {
           
           <h2 className="text-forest font-serif mt-6 mb-3 text-xl font-bold">1. Postanowienia ogólne</h2>
           <p>
-            Niniejszy regulamin określa zasady dokonywania zakupów w sklepie internetowym Kasia Łaciak.
+            Niniejszy regulamin określa zasady dokonywania zakupów w sklepie internetowym Cosmic Loop.
             Sklep zajmuje się sprzedażą rękodzieła wykonywanego na zamówienie.
           </p>
 
@@ -49,14 +102,8 @@ export default function RegulaminPage() {
             Jeżeli zamówiony towar dotarł uszkodzony lub posiada wady, Klient ma prawo złożyć reklamację, wysyłając 
             wiadomość na nasz adres kontaktowy, załączając dowód w postaci zdjęć.
           </p>
-
-          <div className="mt-8 p-4 bg-cream/50 rounded-lg text-sm">
-            <p><strong>Uwaga:</strong> Powyższy tekst stanowi jedynie zarys (wzór) regulaminu. Należy go uzupełnić 
-            o pełne dane sprzedawcy (NIP, REGON, Adres firmy) i skonsultować pod kątem wymogów prawnych.</p>
-          </div>
         </CardContent>
       </Card>
     </div>
   );
 }
-

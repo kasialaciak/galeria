@@ -11,6 +11,7 @@ interface FeaturedProductsProps {
 export async function FeaturedProducts({ products }: FeaturedProductsProps) {
   const t = await getTranslations("Home");
   const tProd = await getTranslations("Products");
+  const tFP = await getTranslations("FeaturedProducts");
 
   // Jeśli baza danych nie zawiera jeszcze dodanych produktów, podajemy przykładowe rękodzieło
   const displayProducts =
@@ -74,7 +75,7 @@ export async function FeaturedProducts({ products }: FeaturedProductsProps) {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
           <span className="text-xs font-semibold uppercase tracking-widest text-teal">
-            Wyselekcjonowane
+            {tFP("selected")}
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-forest mt-1">
             {t("featuredTitle")}

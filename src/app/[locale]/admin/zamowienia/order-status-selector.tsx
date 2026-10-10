@@ -16,21 +16,25 @@ export function OrderStatusSelector({
   const [isPending, startTransition] = useTransition();
 
   const handleStatusChange = (newStatus: string) => {
-    let trackingUrl = undefined;
+    let extraData = undefined;
     if (newStatus === "shipped") {
       const url = window.prompt("Wprowadź link do śledzenia przesyłki (opcjonalnie, klient otrzyma go w mailu):");
       if (url === null) return; // User cancelled
       if (url.trim() !== "") {
-        trackingUrl = url.trim();
+        extraData = url.trim();
       }
+    } else if (newStatus === "cancelled") {
+      const reason = window.prompt("Podaj powód anulowania zamówienia (zostanie wysłany do klienta):");
+      if (reason === null) return; // User cancelled
+      extraData = reason.trim() !== "" ? reason.trim() : "Anulowane przez administratora.";
     }
 
     startTransition(async () => {
-      const res = await updateOrderStatusAction(orderId, newStatus, trackingUrl);
+      const res = await updateOrderStatusAction(orderId, newStatus, extraData);
       if (res.success) {
         toast.success(`Zaktualizowano status zamówienia na: ${newStatus}`);
       } else {
-        toast.error("Błąd aktualizacji statusu");
+        toast.error(res.error || "Błąd aktualizacji statusu");
       }
     });
   };

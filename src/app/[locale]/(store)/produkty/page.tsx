@@ -227,10 +227,10 @@ export default async function ProductsPage({ searchParams }: Props) {
 
       {/* 3. Lista produktów */}
       <div className="mb-6 flex justify-between items-center text-xs text-charcoal/60">
-        <span>Znaleziono: {displayProducts.length} produktów</span>
+        <span>{t("foundCount", { count: displayProducts.length })}</span>
         {kategoria && (
           <span className="font-semibold text-forest">
-            Kategoria: {kategoria}
+            {t("categoryLabel")}: {kategoria}
           </span>
         )}
       </div>
@@ -241,7 +241,7 @@ export default async function ProductsPage({ searchParams }: Props) {
             {t("noResults")}
           </p>
           <p className="text-xs text-charcoal/50">
-            Spróbuj zmienić słowa kluczowe lub zresetować filtry kategorii.
+            {t("tryChangingFilters")}
           </p>
         </div>
       ) : (

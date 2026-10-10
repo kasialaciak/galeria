@@ -43,7 +43,7 @@ export function AddSlideForm() {
 
       <div className="space-y-1">
         <label htmlFor="titlePl" className="text-xs font-semibold text-charcoal">
-          Napis / Tytuł na zdjęciu
+          Napis / Tytuł na zdjęciu (PL)
         </label>
         <Input
           id="titlePl"
@@ -54,13 +54,37 @@ export function AddSlideForm() {
       </div>
 
       <div className="space-y-1">
+        <label htmlFor="titleEn" className="text-xs font-semibold text-charcoal">
+          Napis / Tytuł na zdjęciu (EN)
+        </label>
+        <Input
+          id="titleEn"
+          name="titleEn"
+          placeholder="e.g. New ceramic collection"
+          className="text-xs"
+        />
+      </div>
+
+      <div className="space-y-1">
         <label htmlFor="descriptionPl" className="text-xs font-semibold text-charcoal">
-          Krótki podtytuł
+          Krótki podtytuł (PL)
         </label>
         <Input
           id="descriptionPl"
           name="descriptionPl"
           placeholder="np. Ręcznie toczone naczynia z duszą"
+          className="text-xs"
+        />
+      </div>
+
+      <div className="space-y-1">
+        <label htmlFor="descriptionEn" className="text-xs font-semibold text-charcoal">
+          Krótki podtytuł (EN)
+        </label>
+        <Input
+          id="descriptionEn"
+          name="descriptionEn"
+          placeholder="e.g. Hand-turned vessels with a soul"
           className="text-xs"
         />
       </div>

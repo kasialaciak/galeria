@@ -4,6 +4,7 @@ import { getSettings } from "@/lib/settings";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { OrderStatusSelector } from "./order-status-selector";
 import { Package, Clock } from "lucide-react";
+import { Link } from "@/i18n/routing";
 
 export default async function AdminOrdersPage() {
   const orderList = await getAllAdminOrders();
@@ -53,12 +54,14 @@ export default async function AdminOrdersPage() {
                     return (
                       <tr key={ord.id} className="hover:bg-cream/20 transition-colors">
                         <td className="p-4 align-top">
-                          <span className="font-mono font-bold text-charcoal block">
-                            {ord.orderNumber}
-                          </span>
-                          <span className="text-[11px] text-charcoal/50 block">
-                            {new Date(ord.createdAt).toLocaleDateString("pl-PL")}
-                          </span>
+                          <Link href={`/admin/zamowienia/${ord.id}`} className="group inline-block">
+                            <span className="font-mono font-bold text-charcoal group-hover:text-forest transition-colors flex items-center gap-1 block">
+                              {ord.orderNumber}
+                            </span>
+                            <span className="text-[11px] text-charcoal/50 group-hover:text-charcoal/80 block mt-0.5">
+                              {new Date(ord.createdAt).toLocaleDateString("pl-PL")}
+                            </span>
+                          </Link>
                           {!isFinished && (
                             <div className={`mt-2 flex items-center gap-1 font-medium ${isDelayed ? 'text-red-500' : remainingDays <= 5 ? 'text-orange-500' : 'text-forest'}`}>
                               <Clock className="w-3 h-3" />

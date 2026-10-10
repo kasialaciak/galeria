@@ -43,6 +43,7 @@ export function ProductCard({
   variantsCount = 0,
 }: ProductCardProps) {
   const t = useTranslations("Products");
+  const tCard = useTranslations("ProductCard");
   const locale = useLocale();
   const { addItem } = useCart();
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -75,8 +76,8 @@ export function ProductCard({
     setIsWishlisted(!isWishlisted);
     toast.info(
       isWishlisted
-        ? `${name} usunięto z listy życzeń`
-        : `${name} dodano do listy życzeń`
+        ? tCard("removedFromWishlist", { name })
+        : tCard("addedToWishlist", { name })
     );
   };
 
@@ -94,7 +95,7 @@ export function ProductCard({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-charcoal/30 bg-cream">
-            <span className="font-serif italic text-sm">Rękodzieło</span>
+            <span className="font-serif italic text-sm">{tCard("handicraft")}</span>
           </div>
         )}
 
@@ -102,12 +103,12 @@ export function ProductCard({
         <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
           {compareAtPrice && compareAtPrice > price && (
             <Badge variant="clay" className="text-[10px] tracking-wider uppercase">
-              Promocja
+              {tCard("sale")}
             </Badge>
           )}
           {isFeatured && (
             <Badge variant="secondary" className="text-[10px] tracking-wider uppercase">
-              Bestseller
+              {tCard("bestseller")}
             </Badge>
           )}
         </div>
@@ -131,7 +132,7 @@ export function ProductCard({
       <div className="flex flex-1 flex-col p-4">
         {variantsCount > 1 && (
           <p className="text-[11px] font-semibold text-teal uppercase tracking-wider mb-1">
-            {variantsCount} warianty
+            {tCard("variants", { count: variantsCount })}
           </p>
         )}
         <Link href={`/produkty/${slug}`}>
@@ -147,7 +148,7 @@ export function ProductCard({
         )}
 
         <p className="mt-2 text-[10px] text-charcoal/50">
-          Robione na zamówienie • do {shippingDays} dni roboczych
+          {tCard("madeToOrder", { days: shippingDays })}
         </p>
 
         <div className="mt-auto pt-3 flex items-center justify-between">

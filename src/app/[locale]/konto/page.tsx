@@ -15,12 +15,13 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { User, Package, Shield, ExternalLink, Lock } from "lucide-react";
 
-export default async function AccountPage() {
+export default async function AccountPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   const session = await auth();
   const t = await getTranslations("Account");
 
   if (!session?.user?.id) {
-    redirect({ href: "/konto/logowanie", locale: "pl" });
+    redirect({ href: "/konto/logowanie", locale });
     return null;
   }
 
@@ -50,15 +51,15 @@ export default async function AccountPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "paid":
-        return <Badge variant="secondary">Opłacone</Badge>;
+        return <Badge variant="secondary">{t("statusPaid")}</Badge>;
       case "shipped":
-        return <Badge variant="default">Wysłane</Badge>;
+        return <Badge variant="default">{t("statusShipped")}</Badge>;
       case "delivered":
-        return <Badge variant="sage">Doręczone</Badge>;
+        return <Badge variant="sage">{t("statusDelivered")}</Badge>;
       case "cancelled":
-        return <Badge variant="destructive">Anulowane</Badge>;
+        return <Badge variant="destructive">{t("statusCancelled")}</Badge>;
       default:
-        return <Badge variant="outline">Oczekuje na płatność</Badge>;
+        return <Badge variant="outline">{t("statusPending")}</Badge>;
     }
   };
 
@@ -70,7 +71,7 @@ export default async function AccountPage() {
             {t("title")}
           </h1>
           <p className="text-xs text-charcoal/60 mt-1">
-            Zalogowany jako: <strong className="text-charcoal">{currentUser.email}</strong>
+            {t("loggedInAs")} <strong className="text-charcoal">{currentUser.email}</strong>
           </p>
         </div>
 
@@ -79,7 +80,7 @@ export default async function AccountPage() {
             <Button asChild variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
               <Link href="/admin" className="flex items-center gap-1.5">
                 <Shield className="h-4 w-4" />
-                <span>Panel Administracyjny</span>
+                <span>{t("adminPanel")}</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </Link>
             </Button>
@@ -107,7 +108,7 @@ export default async function AccountPage() {
             <CardHeader className="border-b border-warm-gray pb-4">
               <CardTitle className="font-serif text-lg font-bold text-forest flex items-center gap-2">
                 <Lock className="h-4 w-4 text-forest" />
-                Bezpieczeństwo – zmiana hasła
+                {t("security")}
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6">
@@ -131,7 +132,7 @@ export default async function AccountPage() {
                   <Package className="h-10 w-10 mx-auto text-charcoal/30" />
                   <p className="text-sm font-medium">{t("noOrders")}</p>
                   <Button asChild size="sm" className="bg-forest hover:bg-forest/90 text-white">
-                    <Link href="/produkty">Odkryj produkty w sklepie</Link>
+                    <Link href="/produkty">{t("discoverProducts")}</Link>
                   </Button>
                 </div>
               ) : (
@@ -147,7 +148,7 @@ export default async function AccountPage() {
                         </span>
                         <div className="flex items-center gap-3">
                           <span className="text-charcoal/50">
-                            {new Date(order.createdAt).toLocaleDateString("pl-PL")}
+                            {new Date(order.createdAt).toLocaleDateString(locale === "en" ? "en-US" : "pl-PL")}
                           </span>
                           {getStatusBadge(order.status)}
                         </div>
@@ -156,10 +157,10 @@ export default async function AccountPage() {
                       <div className="flex justify-between items-baseline pt-1">
                         <div>
                           <p className="text-xs text-charcoal/60">
-                            Dostawa: <span className="font-medium text-charcoal">{order.shippingMethod}</span>
+                            {t("shipping")} <span className="font-medium text-charcoal">{order.shippingMethod}</span>
                           </p>
                           <p className="text-xs text-charcoal/60">
-                            Adres: {order.shippingCity}, {order.shippingAddress}
+                            {t("addressLabel")} {order.shippingCity}, {order.shippingAddress}
                           </p>
                         </div>
                         <span className="font-serif text-lg font-bold text-forest">

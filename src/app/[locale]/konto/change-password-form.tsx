@@ -1,29 +1,31 @@
 "use client";
 
 import { useActionState, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { changePassword, ChangePasswordState } from "@/actions/password";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
 export function ChangePasswordForm() {
+  const t = useTranslations("Account");
   const [state, formAction, isPending] = useActionState<ChangePasswordState, FormData>(changePassword, null);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (state?.success) {
-      toast.success("Hasło zostało pomyślnie zmienione.");
+      toast.success(t("passwordChanged"));
       formRef.current?.reset();
     } else if (state?.error) {
       toast.error(state.error);
     }
-  }, [state]);
+  }, [state, t]);
 
   return (
     <form ref={formRef} action={formAction} className="space-y-4">
       <div className="space-y-1.5">
         <label htmlFor="currentPassword" className="text-xs font-semibold text-charcoal">
-          Obecne hasło
+          {t("currentPassword")}
         </label>
         <Input
           id="currentPassword"
@@ -40,7 +42,7 @@ export function ChangePasswordForm() {
 
       <div className="space-y-1.5">
         <label htmlFor="newPassword" className="text-xs font-semibold text-charcoal">
-          Nowe hasło (min. 10 znaków, w tym cyfra i litera)
+          {t("newPassword")} (min. 10 znaków, w tym cyfra i litera)
         </label>
         <Input
           id="newPassword"
@@ -57,7 +59,7 @@ export function ChangePasswordForm() {
 
       <div className="space-y-1.5">
         <label htmlFor="confirmPassword" className="text-xs font-semibold text-charcoal">
-          Potwierdź nowe hasło
+          {t("confirmPassword")}
         </label>
         <Input
           id="confirmPassword"
@@ -77,7 +79,7 @@ export function ChangePasswordForm() {
         disabled={isPending}
         className="w-full bg-forest hover:bg-forest/90 text-white text-xs h-9"
       >
-        {isPending ? "Zmienianie..." : "Zmień hasło"}
+        {isPending ? t("changing") : t("changePassword")}
       </Button>
     </form>
   );

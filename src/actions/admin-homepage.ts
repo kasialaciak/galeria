@@ -17,6 +17,8 @@ export async function addCarouselSlideAction(formData: FormData) {
   const rawData = {
     titlePl: formData.get("titlePl"),
     descriptionPl: formData.get("descriptionPl"),
+    titleEn: formData.get("titleEn"),
+    descriptionEn: formData.get("descriptionEn"),
   };
 
   const parsed = promoSchema.safeParse(rawData);
@@ -24,7 +26,7 @@ export async function addCarouselSlideAction(formData: FormData) {
     return { success: false, error: "Nieprawidłowe dane formularza" };
   }
 
-  const { titlePl, descriptionPl } = parsed.data;
+  const { titlePl, descriptionPl, titleEn, descriptionEn } = parsed.data;
   const linkUrl = formData.get("linkUrl") as string;
 
   if (!imageUrl) {
@@ -37,6 +39,8 @@ export async function addCarouselSlideAction(formData: FormData) {
       imageUrl,
       titlePl: titlePl || null,
       descriptionPl: descriptionPl || null,
+      titleEn: titleEn || null,
+      descriptionEn: descriptionEn || null,
       linkUrl: linkUrl || "/produkty",
       isActive: true,
       sortOrder: 1,
@@ -77,6 +81,8 @@ export async function updateAboutSectionAction(formData: FormData) {
   const rawData = {
     titlePl: formData.get("titlePl"),
     descriptionPl: formData.get("descriptionPl"),
+    titleEn: formData.get("titleEn"),
+    descriptionEn: formData.get("descriptionEn"),
   };
 
   const parsed = promoSchema.safeParse(rawData);
@@ -84,7 +90,7 @@ export async function updateAboutSectionAction(formData: FormData) {
     return { success: false, error: "Nieprawidłowe dane formularza" };
   }
 
-  const { titlePl, descriptionPl } = parsed.data;
+  const { titlePl, descriptionPl, titleEn, descriptionEn } = parsed.data;
   const imageUrl = formData.get("imageUrl") as string;
 
   try {
@@ -100,6 +106,8 @@ export async function updateAboutSectionAction(formData: FormData) {
         .set({
           titlePl,
           descriptionPl,
+          titleEn,
+          descriptionEn,
           imageUrl: imageUrl || existing[0].imageUrl,
         })
         .where(eq(homepageContent.id, existing[0].id));
@@ -108,6 +116,8 @@ export async function updateAboutSectionAction(formData: FormData) {
         section: "about",
         titlePl,
         descriptionPl,
+        titleEn,
+        descriptionEn,
         imageUrl,
         isActive: true,
       });
@@ -126,6 +136,8 @@ export async function updateAboutSectionAction(formData: FormData) {
 const promoSchema = z.object({
   titlePl: z.string().min(1, "Tytuł jest wymagany"),
   descriptionPl: z.string().min(1, "Opis jest wymagany"),
+  titleEn: z.string().optional().nullable(),
+  descriptionEn: z.string().optional().nullable(),
 });
 
 export async function updatePromoSectionAction(formData: FormData) {
@@ -137,6 +149,8 @@ export async function updatePromoSectionAction(formData: FormData) {
   const rawData = {
     titlePl: formData.get("titlePl"),
     descriptionPl: formData.get("descriptionPl"),
+    titleEn: formData.get("titleEn"),
+    descriptionEn: formData.get("descriptionEn"),
   };
 
   const parsed = promoSchema.safeParse(rawData);
@@ -144,7 +158,7 @@ export async function updatePromoSectionAction(formData: FormData) {
     return { success: false, error: "Nieprawidłowe dane formularza" };
   }
 
-  const { titlePl, descriptionPl } = parsed.data;
+  const { titlePl, descriptionPl, titleEn, descriptionEn } = parsed.data;
 
   try {
     const existing = await db
@@ -159,6 +173,8 @@ export async function updatePromoSectionAction(formData: FormData) {
         .set({
           titlePl,
           descriptionPl,
+          titleEn,
+          descriptionEn,
         })
         .where(eq(homepageContent.id, existing[0].id));
     } else {
@@ -166,6 +182,8 @@ export async function updatePromoSectionAction(formData: FormData) {
         section: "gallery_promo",
         titlePl,
         descriptionPl,
+        titleEn,
+        descriptionEn,
         isActive: true,
       });
     }

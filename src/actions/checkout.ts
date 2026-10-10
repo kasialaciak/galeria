@@ -6,6 +6,7 @@ import { orders, orderItems, products, coupons } from "@/db/schema";
 import { stripe } from "@/lib/stripe";
 import { checkoutSchema } from "@/lib/validators";
 import { and, inArray, eq } from "drizzle-orm";
+import { getLocale } from "next-intl/server";
 
 interface CartInputItem {
   productId: string;
@@ -16,6 +17,7 @@ const SHIPPING_COSTS: Record<string, number> = {
   kurier: 1500,     // 15.00 PLN w groszach
   paczkomat: 1200,  // 12.00 PLN w groszach
   odbior: 0,        // 0.00 PLN
+  eu_courier: 6000, // 60.00 PLN w groszach
 };
 
 export async function createCheckoutSession(
@@ -23,6 +25,8 @@ export async function createCheckoutSession(
   cartItems: CartInputItem[]
 ) {
   const session = await auth();
+  const locale = await getLocale();
+
   if (!session?.user?.id) {
     return { error: "Musisz być zalogowany, aby sfinalizować zamówienie." };
   }
@@ -36,6 +40,7 @@ export async function createCheckoutSession(
     shippingAddress: (formData.get("shippingAddress") as string)?.trim() || "",
     shippingCity: (formData.get("shippingCity") as string)?.trim() || "",
     shippingPostalCode: (formData.get("shippingPostalCode") as string)?.trim() || "",
+    shippingCountry: formData.get("shippingCountry") || "PL",
     shippingMethod: formData.get("shippingMethod"),
     shippingPhone: formData.get("shippingPhone"),
     shippingPaczkomat: (formData.get("shippingPaczkomat") as string)?.trim() || undefined,
@@ -148,6 +153,7 @@ export async function createCheckoutSession(
         shippingAddress: finalShippingAddress,
         shippingCity: finalShippingCity,
         shippingPostalCode: finalShippingPostalCode,
+        shippingCountry: shippingDetails.shippingCountry,
         shippingMethod,
         shippingPhone: shippingDetails.shippingPhone,
         shippingPaczkomat: finalShippingPaczkomat,
@@ -156,6 +162,7 @@ export async function createCheckoutSession(
         discountAmount: discountCents,
         customerNotes,
         termsAcceptedAt: new Date(),
+        locale,
       })
       .returning({ id: orders.id });
 

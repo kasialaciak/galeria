@@ -113,6 +113,7 @@ export const products = pgTable(
     stock: integer("stock").default(0).notNull(),
     isPublished: boolean("is_published").default(false).notNull(),
     isFeatured: boolean("is_featured").default(false).notNull(),
+    workTime: text("work_time"),
     viewCount: integer("view_count").default(0).notNull(),
     addToCartCount: integer("add_to_cart_count").default(0).notNull(),
     addToWishlistCount: integer("add_to_wishlist_count").default(0).notNull(),
@@ -158,7 +159,8 @@ export const orders = pgTable(
     shippingPhone: text("shipping_phone"),
     shippingPaczkomat: text("shipping_paczkomat"),
     shippingMethod: text("shipping_method").notNull(),
-    shippingCost: integer("shipping_cost").notNull(), // w groszach
+    shippingCost: integer("shipping_cost").notNull(),
+    locale: text("locale").default("pl").notNull(),
     stripeSessionId: text("stripe_session_id"),
     stripePaymentIntentId: text("stripe_payment_intent_id"),
     customerNotes: text("customer_notes"),

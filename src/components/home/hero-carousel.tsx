@@ -7,6 +7,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
+import { useLocale, useTranslations } from "next-intl";
 
 export interface CarouselSlide {
   id: string;
@@ -57,6 +58,8 @@ const DEFAULT_SLIDES: CarouselSlide[] = [
 
 export function HeroCarousel({ slides }: HeroCarouselProps) {
   const activeSlides = slides && slides.length > 0 ? slides : DEFAULT_SLIDES;
+  const locale = useLocale();
+  const t = useTranslations("HeroCarousel");
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, duration: 30 },
@@ -89,48 +92,53 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       {/* Embla Viewport */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
-          {activeSlides.map((slide, index) => (
-            <div
-              key={slide.id || index}
-              className="relative min-w-full h-[360px] sm:h-[480px] lg:h-[560px] flex items-center justify-center"
-            >
-              <Image
-                src={slide.imageUrl}
-                alt={slide.titlePl || "Rękodzieło baner"}
-                fill
-                priority={index === 0}
-                className="object-cover"
-                sizes="100vw"
-              />
-              {/* Ciemniejszy gradient dla czytelności tekstu */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/20" />
+          {activeSlides.map((slide, index) => {
+            const title = locale === "en" ? slide.titleEn || slide.titlePl : slide.titlePl;
+            const description = locale === "en" ? slide.descriptionEn || slide.descriptionPl : slide.descriptionPl;
+            
+            return (
+              <div
+                key={slide.id || index}
+                className="relative min-w-full h-[360px] sm:h-[480px] lg:h-[560px] flex items-center justify-center"
+              >
+                <Image
+                  src={slide.imageUrl}
+                  alt={title || t("bannerAlt")}
+                  fill
+                  priority={index === 0}
+                  className="object-cover"
+                  sizes="100vw"
+                />
+                {/* Ciemniejszy gradient dla czytelności tekstu */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/20" />
 
-              {/* Treść slajdu */}
-              <div className="relative z-10 mx-auto max-w-4xl px-4 text-center text-white space-y-4">
-                {slide.titlePl && (
-                  <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight drop-shadow-md">
-                    {slide.titlePl}
-                  </h2>
-                )}
-                {slide.descriptionPl && (
-                  <p className="mx-auto max-w-xl text-sm sm:text-lg text-cream/90 font-light drop-shadow-xs">
-                    {slide.descriptionPl}
-                  </p>
-                )}
-                {slide.linkUrl && (
-                  <div className="pt-2">
-                    <Button
-                      size="lg"
-                      asChild
-                      className="bg-forest hover:bg-forest/90 text-white font-medium shadow-md border border-white/20"
-                    >
-                      <Link href={slide.linkUrl as any}>Odkryj kolekcję</Link>
-                    </Button>
-                  </div>
-                )}
+                {/* Treść slajdu */}
+                <div className="relative z-10 mx-auto max-w-4xl px-4 text-center text-white space-y-4">
+                  {title && (
+                    <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight drop-shadow-md">
+                      {title}
+                    </h2>
+                  )}
+                  {description && (
+                    <p className="mx-auto max-w-xl text-sm sm:text-lg text-cream/90 font-light drop-shadow-xs">
+                      {description}
+                    </p>
+                  )}
+                  {slide.linkUrl && (
+                    <div className="pt-2">
+                      <Button
+                        size="lg"
+                        asChild
+                        className="bg-forest hover:bg-forest/90 text-white font-medium shadow-md border border-white/20"
+                      >
+                        <Link href={slide.linkUrl as any}>{t("discoverCollection")}</Link>
+                      </Button>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -138,7 +146,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       <button
         onClick={scrollPrev}
         className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/70 text-charcoal backdrop-blur-xs shadow-md hover:bg-white transition-all cursor-pointer"
-        aria-label="Poprzednie zdjęcie"
+        aria-label={t("prevSlide")}
       >
         <ChevronLeft className="h-6 w-6" />
       </button>
@@ -146,7 +154,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       <button
         onClick={scrollNext}
         className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/70 text-charcoal backdrop-blur-xs shadow-md hover:bg-white transition-all cursor-pointer"
-        aria-label="Następne zdjęcie"
+        aria-label={t("nextSlide")}
       >
         <ChevronRight className="h-6 w-6" />
       </button>

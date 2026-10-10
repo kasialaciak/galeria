@@ -33,14 +33,14 @@ export function ContactClientForm() {
           <label htmlFor="name" className="text-xs font-semibold text-charcoal">
             {t("name")} *
           </label>
-          <Input id="name" name="name" required placeholder="Twoje imię" />
+          <Input id="name" name="name" required placeholder={t("namePlaceholder")} />
         </div>
 
         <div className="space-y-1.5">
           <label htmlFor="email" className="text-xs font-semibold text-charcoal">
             {t("email")} *
           </label>
-          <Input id="email" name="email" type="email" required placeholder="twoj@email.pl" />
+          <Input id="email" name="email" type="email" required placeholder={t("emailPlaceholder")} />
         </div>
       </div>
 
@@ -48,7 +48,7 @@ export function ContactClientForm() {
         <label htmlFor="subject" className="text-xs font-semibold text-charcoal">
           {t("subject")} *
         </label>
-        <Input id="subject" name="subject" required placeholder="W jakiej sprawie piszesz?" />
+        <Input id="subject" name="subject" required placeholder={t("subjectPlaceholder")} />
       </div>
 
       <div className="space-y-1.5">
@@ -60,7 +60,7 @@ export function ContactClientForm() {
           name="message"
           required
           rows={5}
-          placeholder="Napisz swoją wiadomość..."
+          placeholder={t("messagePlaceholder")}
           className="flex w-full rounded-md border border-warm-gray bg-white px-3 py-2 text-sm text-charcoal shadow-sm transition-colors placeholder:text-charcoal/40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-forest"
         />
       </div>
@@ -72,7 +72,7 @@ export function ContactClientForm() {
         className="w-full sm:w-auto bg-forest hover:bg-forest/90 text-white font-medium px-8"
       >
         <Send className="h-4 w-4 mr-2" />
-        <span>{isPending ? "Wysyłanie..." : t("send")}</span>
+        <span>{isPending ? t("sending") : t("send")}</span>
       </Button>
     </form>
   );

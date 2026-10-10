@@ -111,18 +111,30 @@ export async function deleteGalleryCarouselImage(id: string) {
 }
 
 export async function getGalleryDescription() {
-  const result = await db.select().from(siteSettings).where(eq(siteSettings.key, "gallery_description"));
-  return result[0]?.value || "";
+  const resultPl = await db.select().from(siteSettings).where(eq(siteSettings.key, "gallery_description"));
+  const resultEn = await db.select().from(siteSettings).where(eq(siteSettings.key, "gallery_description_en"));
+  return {
+    pl: resultPl[0]?.value || "",
+    en: resultEn[0]?.value || "",
+  };
 }
 
-export async function updateGalleryDescription(description: string) {
+export async function updateGalleryDescription(descriptionPl: string, descriptionEn: string) {
   await requireAdmin();
-  const existing = await db.select().from(siteSettings).where(eq(siteSettings.key, "gallery_description"));
-  if (existing.length > 0) {
-    await db.update(siteSettings).set({ value: description, updatedAt: new Date() }).where(eq(siteSettings.key, "gallery_description"));
+  const existingPl = await db.select().from(siteSettings).where(eq(siteSettings.key, "gallery_description"));
+  if (existingPl.length > 0) {
+    await db.update(siteSettings).set({ value: descriptionPl, updatedAt: new Date() }).where(eq(siteSettings.key, "gallery_description"));
   } else {
-    await db.insert(siteSettings).values({ key: "gallery_description", value: description });
+    await db.insert(siteSettings).values({ key: "gallery_description", value: descriptionPl });
   }
+
+  const existingEn = await db.select().from(siteSettings).where(eq(siteSettings.key, "gallery_description_en"));
+  if (existingEn.length > 0) {
+    await db.update(siteSettings).set({ value: descriptionEn, updatedAt: new Date() }).where(eq(siteSettings.key, "gallery_description_en"));
+  } else {
+    await db.insert(siteSettings).values({ key: "gallery_description_en", value: descriptionEn });
+  }
+
   revalidatePath("/[locale]/admin/gallery", "page");
   revalidatePath("/[locale]/galeria", "page");
 }

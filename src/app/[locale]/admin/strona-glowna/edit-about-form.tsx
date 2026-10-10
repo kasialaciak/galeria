@@ -9,13 +9,17 @@ import { Save } from "lucide-react";
 
 interface EditAboutFormProps {
   initialTitle: string;
+  initialTitleEn?: string;
   initialDescription: string;
+  initialDescriptionEn?: string;
   initialImageUrl: string;
 }
 
 export function EditAboutForm({
   initialTitle,
+  initialTitleEn,
   initialDescription,
+  initialDescriptionEn,
   initialImageUrl,
 }: EditAboutFormProps) {
   const [isPending, startTransition] = useTransition();
@@ -50,6 +54,18 @@ export function EditAboutForm({
       </div>
 
       <div className="space-y-1.5">
+        <label htmlFor="titleEn" className="text-xs font-semibold text-charcoal">
+          Tytuł sekcji (EN)
+        </label>
+        <Input
+          id="titleEn"
+          name="titleEn"
+          defaultValue={initialTitleEn || ""}
+          className="text-xs"
+        />
+      </div>
+
+      <div className="space-y-1.5">
         <label htmlFor="descriptionPl" className="text-xs font-semibold text-charcoal">
           Treść opisu pracowni (PL) *
         </label>
@@ -61,6 +77,19 @@ export function EditAboutForm({
             "W naszej pracowni wierzymy, że przedmioty codziennego użytku powinny nieść ze sobą ciepło ludzkich rąk i szacunek do natury. Każdy egzemplarz ceramiki, biżuterii i tkaniny powstaje z ekologicznych materiałów..."
           }
           required
+          rows={5}
+          className="flex w-full rounded-md border border-warm-gray bg-white px-3 py-2 text-xs text-charcoal shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-forest leading-relaxed"
+        />
+      </div>
+
+      <div className="space-y-1.5">
+        <label htmlFor="descriptionEn" className="text-xs font-semibold text-charcoal">
+          Treść opisu pracowni (EN)
+        </label>
+        <textarea
+          id="descriptionEn"
+          name="descriptionEn"
+          defaultValue={initialDescriptionEn || ""}
           rows={5}
           className="flex w-full rounded-md border border-warm-gray bg-white px-3 py-2 text-xs text-charcoal shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-forest leading-relaxed"
         />

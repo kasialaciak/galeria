@@ -1,10 +1,10 @@
-﻿import { getAdminProductsList } from "@/actions/admin-products";
+import { getAdminProductsList } from "@/actions/admin-products";
 import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/routing";
-import { Plus, Eye, ShoppingBag, Heart, Package, Trash2, ExternalLink } from "lucide-react";
+import { Plus, Eye, ShoppingBag, Heart, Package, Trash2, ExternalLink, Pencil } from "lucide-react";
 import Image from "next/image";
 import { DeleteProductButton } from "./delete-product-button";
 
@@ -89,12 +89,6 @@ export default async function AdminProductsPage() {
                       </td>
 
                       <td className="p-4">
-                        <span className="font-medium text-charcoal">
-                          
-                        </span>
-                      </td>
-
-                      <td className="p-4">
                         <div className="flex flex-col gap-1">
                           <Badge variant={prod.isPublished ? "default" : "outline"} className="text-[10px] w-fit">
                             {prod.isPublished ? "Opublikowany" : "Szkic"}
@@ -126,6 +120,11 @@ export default async function AdminProductsPage() {
 
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-2">
+                          <Button asChild variant="ghost" size="icon" className="h-8 w-8 text-charcoal/60 hover:text-forest">
+                            <Link href={`/admin/produkty/${prod.id}`} title="Edytuj produkt">
+                              <Pencil className="h-3.5 w-3.5" />
+                            </Link>
+                          </Button>
                           <Button asChild variant="ghost" size="icon" className="h-8 w-8 text-charcoal/60 hover:text-forest">
                             <Link href={`/produkty/${prod.slug}`} target="_blank" title="Podgląd w sklepie">
                               <ExternalLink className="h-3.5 w-3.5" />

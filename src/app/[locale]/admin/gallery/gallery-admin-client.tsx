@@ -23,7 +23,8 @@ export function GalleryAdminClient({
 }: any) {
   const [activeTab, setActiveTab] = useState("works");
 
-  const [description, setDescription] = useState(initialDescription);
+  const [descriptionPl, setDescriptionPl] = useState(initialDescription?.pl || "");
+  const [descriptionEn, setDescriptionEn] = useState(initialDescription?.en || "");
   
   // Category state
   const [catPl, setCatPl] = useState("");
@@ -40,7 +41,7 @@ export function GalleryAdminClient({
 
   const handleSaveDescription = async () => {
     try {
-      await updateGalleryDescription(description);
+      await updateGalleryDescription(descriptionPl, descriptionEn);
       toast.success("Zapisano opis galerii");
     } catch (e) {
       toast.error("Błąd zapisu opisu");
@@ -266,13 +267,26 @@ export function GalleryAdminClient({
               <CardTitle>Opis pod karuzelą</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <textarea 
-                className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                value={description} 
-                onChange={e => setDescription(e.target.value)} 
-                placeholder="Wpisz krótki opis widoczny na górze galerii..."
-                rows={4}
-              />
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Opis galerii (PL)</label>
+                <textarea 
+                  className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  value={descriptionPl} 
+                  onChange={e => setDescriptionPl(e.target.value)} 
+                  placeholder="Wpisz krótki opis widoczny na górze galerii..."
+                  rows={4}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Opis galerii (EN)</label>
+                <textarea 
+                  className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  value={descriptionEn} 
+                  onChange={e => setDescriptionEn(e.target.value)} 
+                  placeholder="Enter a short description..."
+                  rows={4}
+                />
+              </div>
               <Button onClick={handleSaveDescription}>Zapisz Opis</Button>
             </CardContent>
           </Card>

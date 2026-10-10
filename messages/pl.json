@@ -8,7 +8,10 @@
     "account": "Konto",
     "login": "Zaloguj się",
     "register": "Zarejestruj się",
-    "logout": "Wyloguj się"
+    "logout": "Wyloguj się",
+    "gallery": "Galeria prac",
+    "subtitle": "Unikatowe, ręcznie tworzone przedmioty",
+    "openMenu": "Rozwiń menu"
   },
   "Home": {
     "featuredTitle": "Proponowane produkty",
@@ -35,7 +38,16 @@
     "variants": "Warianty",
     "stock": "Dostępność",
     "inStock": "W magazynie",
-    "outOfStock": "Brak w magazynie"
+    "outOfStock": "Brak w magazynie",
+    "foundCount": "Znaleziono: {count} produktów",
+    "categoryLabel": "Kategoria",
+    "tryChangingFilters": "Spróbuj zmienić słowa kluczowe lub zresetować filtry kategorii.",
+    "searchPlaceholder": "Szukaj po słowach kluczowych...",
+    "searchButton": "Szukaj",
+    "sortNewest": "Najnowsze",
+    "sortPopular": "Najpopularniejsze",
+    "sortPriceAsc": "Cena: rosnąco",
+    "sortPriceDesc": "Cena: malejąco"
   },
   "Cart": {
     "title": "Koszyk",
@@ -65,7 +77,50 @@
     "totalWithShipping": "Razem z wysyłką",
     "pay": "Przejdź do płatności Stripe",
     "successTitle": "Zamówienie opłacone pomyślnie!",
-    "successMessage": "Dziękujemy za zakup rękodzieła. Twoje zamówienie zostało przyjęte do realizacji."
+    "successMessage": "Dziękujemy za zakup rękodzieła. Twoje zamówienie zostało przyjęte do realizacji.",
+    "couponTitle": "Kupon rabatowy",
+    "couponAdded": "Kupon dodany!",
+    "couponError": "Błąd przy weryfikacji kuponu",
+    "couponServerError": "Błąd serwera",
+    "discountApplied": "Zniżka naliczona",
+    "remove": "Usuń",
+    "yourCode": "Twój kod...",
+    "add": "Dodaj",
+    "termsError": "Musisz zaakceptować regulamin, aby złożyć zamówienie.",
+    "email": "Email *",
+    "phone": "Telefon *",
+    "phonePlaceholder": "np. 500 123 456",
+    "pickupInfo": "Wybrano odbiór osobisty – adres dostawy nie jest wymagany.",
+    "customerNotes": "Uwagi do zamówienia (opcjonalnie)",
+    "customerNotesPlaceholder": "Napisz jeśli masz specjalne życzenia co do kolorów lub detali...",
+    "parcelLockerDesc": "Dostawa w 24-48h do wybranego automatu",
+    "parcelLockerCode": "Kod Paczkomatu *",
+    "findLocker": "Znajdź paczkomat",
+    "parcelLockerPlaceholder": "np. WAW123M",
+    "courierDesc": "Dostawa kurierem pod same drzwi",
+    "pickupDesc": "Cosmic Loop (ustalane indywidualnie)",
+    "pickupWarning": "Ważne: W przypadku odbioru osobistego, prosimy o kontakt ze sprzedawcą w celu ustalenia terminu odbioru.",
+    "subtotalLabel": "Wartość koszyka:",
+    "discountLabel": "Zniżka ({code}):",
+    "shippingLabel": "Dostawa ({method}):",
+    "totalLabel": "Razem do zapłaty:",
+    "termsPrefix": "Akceptuję",
+    "termsLink": "Regulamin sklepu",
+    "termsMiddle": "oraz zgadzam się z",
+    "privacyLink": "Polityką Prywatności",
+    "termsSuffix": ". Rozumiem, że towary tworzone na zamówienie według mojej specyfikacji mogą mieć ograniczony lub wyłączony zwrot, zgodnie z informacjami w regulaminie. *",
+    "connectingPayment": "Łączenie z bramką płatności...",
+    "orderAndPay": "Zamawiam z obowiązkiem zapłaty",
+    "paymentInfo": "Płatność kartą lub BLIK. Dane są w pełni szyfrowane przez Stripe.",
+    "cartEmptyTitle": "Twój koszyk jest pusty",
+    "cartEmptyDesc": "Dodaj produkty do koszyka, aby przejść do kasy.",
+    "backToShop": "Wróć do sklepu",
+    "subtitle": "Krok przed bezpieczną płatnością przez Stripe",
+    "shippingCountry": "Kraj dostawy *",
+    "euCourier": "Wysyłka zagraniczna (UE)",
+    "euCourierDesc": "Kurier międzynarodowy",
+    "invalidPaczkomat": "Paczkomat o podanym kodzie nie istnieje.",
+    "validatingPaczkomat": "Weryfikacja paczkomatu..."
   },
   "Wishlist": {
     "title": "Lista życzeń",
@@ -83,7 +138,35 @@
     "status": "Status",
     "amount": "Kwota",
     "phone": "Numer telefonu",
-    "updateSuccess": "Dane zostały zaktualizowane"
+    "updateSuccess": "Dane zostały zaktualizowane",
+    "loggedInAs": "Zalogowany jako:",
+    "adminPanel": "Panel Administracyjny",
+    "security": "Bezpieczenstwo - zmiana hasla",
+    "discoverProducts": "Odkryj produkty w sklepie",
+    "shipping": "Dostawa:",
+    "addressLabel": "Adres:",
+    "statusPaid": "Oplacone",
+    "statusShipped": "Wyslane",
+    "statusDelivered": "Doreczone",
+    "statusCancelled": "Anulowane",
+    "statusPending": "Oczekuje na platnosc",
+    "emailLabel": "Adres email (login)",
+    "nameLabel": "Imię i nazwisko",
+    "namePlaceholder": "Twoje imię i nazwisko",
+    "phoneLabel": "Numer telefonu",
+    "phonePlaceholder": "+48 123 456 789",
+    "saveChanges": "Zapisz zmiany",
+    "saving": "Zapisywanie...",
+    "profileUpdated": "Dane osobowe zostały zaktualizowane",
+    "errorOccurred": "Wystąpił błąd",
+    "currentPassword": "Obecne hasło",
+    "newPassword": "Nowe hasło",
+    "confirmPassword": "Potwierdź nowe hasło",
+    "changePassword": "Zmień hasło",
+    "changing": "Zmienianie...",
+    "passwordChanged": "Hasło zostało pomyślnie zmienione",
+    "passwordMismatch": "Nowe hasła nie są identyczne",
+    "logout": "Wyloguj się"
   },
   "Auth": {
     "loginTitle": "Zaloguj się do sklepu",
@@ -107,7 +190,23 @@
     "send": "Wyślij wiadomość",
     "sent": "Wiadomość została wysłana pomyślnie!",
     "addressTitle": "Pracownia Rękodzieła",
-    "addressDetails": "ul. Rękodzielnicza 12, 00-001 Warszawa"
+    "addressDetails": "ul. Rękodzielnicza 12, 00-001 Warszawa",
+    "invite": "Zapraszamy do kontaktu",
+    "subtitle": "Chcesz zapytac o indywidualne zamówienie, dostepnosc wariantu lub współpracę? Napisz do nas.",
+    "instagram": "Odwiedz nas na instagramie",
+    "directEmail": "Napisz bezposrednio",
+    "callUs": "Zadzwon do nas",
+    "workingDays": "Dni pracy",
+    "monToFri": "Poniedzialek - Piatek",
+    "holidays": "Najblizsze dni wolne od pracy:",
+    "none": "Brak",
+    "customOrders": "Realizujemy takze unikatowe zam-wienia na specjalne zyczenie!",
+    "replyTime": "Odpowiadamy zazwyczaj w ciagu 24 godzin roboczych.",
+    "namePlaceholder": "Twoje imię",
+    "emailPlaceholder": "twoj@email.pl",
+    "subjectPlaceholder": "W jakiej sprawie piszesz?",
+    "messagePlaceholder": "Napisz swoją wiadomość...",
+    "sending": "Wysyłanie..."
   },
   "Common": {
     "currency": "zł",
@@ -118,5 +217,108 @@
     "delete": "Usuń",
     "edit": "Edytuj",
     "back": "Wróć"
+  },
+  "Gallery": {
+    "title": "Galeria Prac",
+    "backToShop": "Wróć do sklepu",
+    "all": "Wszystkie",
+    "noWorks": "Brak prac w tej kategorii.",
+    "close": "Zamknij",
+    "toShop": "Do Sklepu"
+  },
+  "HeroCarousel": {
+    "discoverCollection": "Odkryj kolekcję",
+    "bannerAlt": "Rękodzieło baner",
+    "prevSlide": "Poprzednie zdjęcie",
+    "nextSlide": "Następne zdjęcie"
+  },
+  "ProductTabs": {
+    "reviewsTab": "Opinie klientów",
+    "specsTab": "Specyfikacja produktu",
+    "from5Stars": "z 5 gwiazdek",
+    "totalReviews": "Lacznie opinii:",
+    "verifiedNotice": "Wszystkie opinie pochodza od zweryfikowanych klientów, którzy zakupili ten produkt.",
+    "wantToReview": "Chcesz dodac opinie?",
+    "loginToReview": "Zaloguj sie na swoje konto",
+    "reviewOnlyBuyers": "Opinie moga dodawac wylacznie klienci po zakupie tego produktu.",
+    "reviewOnlyVerified": "Opinie moga dodawac wylacznie zweryfikowani klienci po zakupie.",
+    "noReviews": "Brak opinii dla tego produktu",
+    "beTheFirst": "Badz pierwsza osoba, kt-ra podzieli sie wrazeniami po zakupie!",
+    "buyer": "Kupujacy",
+    "noSpecs": "Brak dodatkowych szczegółów specyfikacji",
+    "specsInfo": "Informacje o materialach i wykonaniu znajdziesz w opisie powyzej."
+  },
+  "ProductPage": {
+    "backToProducts": "Wróć do wszystkich produktów",
+    "madeToOrder": "Robione na zamówienie (do {days} dni roboczych)",
+    "aboutProduct": "O produkcie",
+    "handmade": "Tworzone w 100% recznie",
+    "noRatings": "Brak ocen",
+    "reviews_one": "opinia",
+    "reviews_few": "opinie",
+    "reviews_many": "opinii"
+  },
+  "ProductCard": {
+    "handicraft": "Rękodzieło",
+    "sale": "Promocja",
+    "bestseller": "Bestseller",
+    "variants": "{count} warianty",
+    "madeToOrder": "Robione na zamówienie • do {days} dni roboczych",
+    "removedFromWishlist": "{name} usunięto z listy życzeń",
+    "addedToWishlist": "{name} dodano do listy życzeń"
+  },
+  "FeaturedProducts": {
+    "selected": "Wyselekcjonowane"
+  },
+  "AboutSection": {
+    "visitWorkshop": "Odwiedź naszą pracownię"
+  },
+  "GalleryPromoSection": {
+    "goToGallery": "Przejdź do galerii prac",
+    "images": {
+      "img1Alt": "Ceramika artystyczna",
+      "img1Label": "Pracownia ceramiki",
+      "img2Alt": "Ręcznie robiona biżuteria",
+      "img2Label": "Kamienie naturalne",
+      "img3Alt": "Proces tworzenia rękodzieła",
+      "img3Label": "Za kulisami"
+    }
+  },
+  "DeliveryBanner": {
+    "message": "Kazdy produkt jest robiony recznie na zamówienie - czas realizacji i wysylki do {days} dni roboczych."
+  },
+  "Footer": {
+    "description": "Zamówienia robione ręcznie, z sercem i pasją.",
+    "quickLinks": "Szybkie linki",
+    "information": "Informacje",
+    "terms": "Regulamin",
+    "privacy": "Polityka prywatności",
+    "rights": "Wszelkie prawa zastrzeżone."
+  },
+  "Countries": {
+    "PL": "Polska",
+    "DE": "Niemcy",
+    "CZ": "Czechy",
+    "SK": "Słowacja",
+    "LT": "Litwa",
+    "LV": "Łotwa",
+    "EE": "Estonia",
+    "AT": "Austria",
+    "FR": "Francja",
+    "IT": "Włochy",
+    "ES": "Hiszpania",
+    "NL": "Holandia",
+    "BE": "Belgia",
+    "DK": "Dania",
+    "SE": "Szwecja",
+    "FI": "Finlandia"
+  },
+  "Cookies": {
+    "title": "Ciasteczka (Cookies)",
+    "description": "Używamy plików cookies, aby zapewnić prawidłowe działanie koszyka i logowania. Możesz również zaakceptować cookies analityczne, które pomogą nam ulepszać sklep. Szczegóły znajdziesz w naszej",
+    "privacyLink": "Polityce Prywatności",
+    "acceptAll": "Akceptuję wszystkie",
+    "acceptEssential": "Tylko niezbędne",
+    "close": "Zamknij"
   }
 }

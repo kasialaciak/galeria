@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -6,11 +6,12 @@ import { Link } from "@/i18n/routing";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@/components/ui/button";
-import { useLocale } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { ArrowLeft, ExternalLink, X } from "lucide-react";
 
 export function GalleryClient({ categories, works, carousel, description }: any) {
   const locale = useLocale();
+  const t = useTranslations("Gallery");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [selectedWork, setSelectedWork] = useState<any | null>(null);
 
@@ -25,7 +26,7 @@ export function GalleryClient({ categories, works, carousel, description }: any)
   return (
     <div className="space-y-12">
       {/* Navbar / Back to shop */}
-      <div className="container mx-auto px-4 pt-12 pb-6 flex flex-col items-center justify-center relative"><h1 className="text-4xl md:text-5xl font-serif font-bold text-forest text-center tracking-tight mb-6">Galeria Prac</h1></div>
+      <div className="container mx-auto px-4 pt-12 pb-6 flex flex-col items-center justify-center relative"><h1 className="text-4xl md:text-5xl font-serif font-bold text-forest text-center tracking-tight mb-6">{t('title')}</h1></div>
 
       {/* Carousel */}
       {carousel.length > 0 && (
@@ -49,10 +50,10 @@ export function GalleryClient({ categories, works, carousel, description }: any)
       )}
 
       {/* Description */}
-      {description && (
+      {(description?.pl || description?.en) && (
         <section className="container mx-auto px-4 max-w-3xl text-center">
           <p className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
-            {description}
+            {locale === 'en' ? (description.en || description.pl) : (description.pl || description.en)}
           </p>
         </section>
       )}
@@ -65,7 +66,7 @@ export function GalleryClient({ categories, works, carousel, description }: any)
             onClick={() => setActiveCategory(null)}
             className="rounded-full"
           >
-            Wszystkie
+            {t('all')}
           </Button>
           {categories.map((cat: any) => (
             <Button 
@@ -102,7 +103,7 @@ export function GalleryClient({ categories, works, carousel, description }: any)
           ))}
           {filteredWorks.length === 0 && (
             <div className="col-span-full text-center py-12 text-muted-foreground">
-              Brak prac w tej kategorii.
+              {t('noWorks')}
             </div>
           )}
         </div>
@@ -141,11 +142,11 @@ export function GalleryClient({ categories, works, carousel, description }: any)
               
               <div className="mt-8 pt-6 border-t flex justify-between items-center">
                 <Button variant="outline" onClick={() => setSelectedWork(null)}>
-                  Zamknij
+                  {t('close')}
                 </Button>
                 <Link href="/">
                   <Button className="gap-2">
-                    <ExternalLink className="h-4 w-4" /> Do Sklepu
+                    <ExternalLink className="h-4 w-4" /> {t('toShop')}
                   </Button>
                 </Link>
               </div>

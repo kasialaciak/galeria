@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { X, Cookie } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function CookieBanner() {
   const [show, setShow] = useState(false);
+  const t = useTranslations("Cookies");
 
   useEffect(() => {
     // Check if the user has already answered the cookie consent
@@ -38,7 +40,7 @@ export function CookieBanner() {
         <button 
           onClick={handleAcceptEssential}
           className="absolute top-4 right-4 text-charcoal/40 hover:text-charcoal transition-colors"
-          aria-label="Zamknij"
+          aria-label={t("close")}
         >
           <X className="h-4 w-4" />
         </button>
@@ -48,13 +50,11 @@ export function CookieBanner() {
             <Cookie className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="font-serif font-bold text-forest text-lg">Ciasteczka (Cookies)</h3>
+            <h3 className="font-serif font-bold text-forest text-lg">{t("title")}</h3>
             <p className="text-xs text-charcoal/70 mt-1 leading-relaxed">
-              Używamy plików cookies, aby zapewnić prawidłowe działanie koszyka i logowania. 
-              Możesz również zaakceptować cookies analityczne, które pomogą nam ulepszać sklep. 
-              Szczegóły znajdziesz w naszej{" "}
+              {t("description")}{" "}
               <Link href="/polityka-prywatnosci" className="text-forest font-semibold hover:underline">
-                Polityce Prywatności
+                {t("privacyLink")}
               </Link>.
             </p>
           </div>
@@ -65,14 +65,14 @@ export function CookieBanner() {
             onClick={handleAcceptAll}
             className="flex-1 bg-forest hover:bg-forest/90 text-white font-medium text-xs sm:text-sm"
           >
-            Akceptuję wszystkie
+            {t("acceptAll")}
           </Button>
           <Button 
             onClick={handleAcceptEssential}
             variant="outline"
             className="flex-1 border-warm-gray text-charcoal text-xs sm:text-sm"
           >
-            Tylko niezbędne
+            {t("acceptEssential")}
           </Button>
         </div>
       </div>

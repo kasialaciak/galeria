@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
@@ -24,8 +24,10 @@ interface CheckoutClientFormProps {
 
 export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
   const t = useTranslations("Checkout");
+  const tCountries = useTranslations("Countries");
   const { items, totalPrice, clearCart } = useCart();
-  const [shippingMethod, setShippingMethod] = useState<"kurier" | "paczkomat" | "odbior">("paczkomat");
+  const [shippingCountry, setShippingCountry] = useState("PL");
+  const [shippingMethod, setShippingMethod] = useState<"kurier" | "paczkomat" | "odbior" | "eu_courier">("paczkomat");
   const [isPending, startTransition] = useTransition();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -35,8 +37,9 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
   const [couponError, setCouponError] = useState("");
 
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isValidatingPaczkomat, setIsValidatingPaczkomat] = useState(false);
 
-  const shippingCost = shippingMethod === "kurier" ? 1500 : shippingMethod === "paczkomat" ? 1200 : 0;
+  const shippingCost = shippingMethod === "kurier" ? 1500 : shippingMethod === "paczkomat" ? 1200 : shippingMethod === "eu_courier" ? 6000 : 0;
   
   const subtotal = totalPrice();
   
@@ -50,13 +53,13 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
       if (res.success && res.coupon) {
         setActiveCoupon(res.coupon);
         setCouponCode("");
-        toast.success("Kupon dodany!");
+        toast.success(t("couponAdded"));
       } else {
-        setCouponError(res.error || "Błąd przy weryfikacji kuponu");
+        setCouponError(res.error || t("couponError"));
         setActiveCoupon(null);
       }
     } catch (e) {
-      setCouponError("Błąd serwera");
+      setCouponError(t("couponServerError"));
     } finally {
       setValidatingCoupon(false);
     }
@@ -84,25 +87,45 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
     return (
       <div className="py-20 text-center bg-white rounded-2xl border border-warm-gray p-8">
         <ShoppingBag className="h-10 w-10 mx-auto text-charcoal/30 mb-3" />
-        <h2 className="font-serif text-2xl font-bold text-forest mb-2">Twój koszyk jest pusty</h2>
-        <p className="text-sm text-charcoal/60 mb-6">Dodaj produkty do koszyka, aby przejść do kasy.</p>
+        <h2 className="font-serif text-2xl font-bold text-forest mb-2">{t("cartEmptyTitle")}</h2>
+        <p className="text-sm text-charcoal/60 mb-6">{t("cartEmptyDesc")}</p>
         <Button asChild className="bg-forest hover:bg-forest/90 text-white">
-          <Link href="/produkty">Wróć do sklepu</Link>
+          <Link href="/produkty">{t("backToShop")}</Link>
         </Button>
       </div>
     );
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMsg(null);
 
     if (!termsAccepted) {
-      toast.error("Musisz zaakceptować regulamin, aby złożyć zamówienie.");
+      toast.error(t("termsError"));
       return;
     }
 
     const formData = new FormData(e.currentTarget);
+    
+    if (shippingMethod === "paczkomat" && shippingCountry === "PL") {
+      const paczkomatCode = formData.get("shippingPaczkomat");
+      if (paczkomatCode && typeof paczkomatCode === "string") {
+        setIsValidatingPaczkomat(true);
+        try {
+          const res = await fetch(`https://api-pl-points.easypack24.net/v1/points/${paczkomatCode.toUpperCase()}`);
+          if (!res.ok) {
+            setIsValidatingPaczkomat(false);
+            setErrorMsg(t("invalidPaczkomat"));
+            toast.error(t("invalidPaczkomat"));
+            return;
+          }
+        } catch (err) {
+          // Ignore network errors and proceed
+        }
+        setIsValidatingPaczkomat(false);
+      }
+    }
+
     formData.set("shippingMethod", shippingMethod);
     if (activeCoupon) {
       formData.set("couponCode", activeCoupon.code);
@@ -148,23 +171,62 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6 space-y-4">
-            <div className="space-y-1.5">
-              <label htmlFor="shippingName" className="text-xs font-semibold text-charcoal">
-                {t("name")} *
-              </label>
-              <Input
-                id="shippingName"
-                name="shippingName"
-                defaultValue={user.name || ""}
-                required
-                placeholder="Jan Kowalski"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label htmlFor="shippingName" className="text-xs font-semibold text-charcoal">
+                  {t("name")} *
+                </label>
+                <Input
+                  id="shippingName"
+                  name="shippingName"
+                  defaultValue={user.name || ""}
+                  required
+                  placeholder="Jan Kowalski"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label htmlFor="shippingCountry" className="text-xs font-semibold text-charcoal">
+                  {t("shippingCountry")}
+                </label>
+                <select
+                  id="shippingCountry"
+                  name="shippingCountry"
+                  value={shippingCountry}
+                  onChange={(e) => {
+                    const country = e.target.value;
+                    setShippingCountry(country);
+                    if (country !== "PL") {
+                      setShippingMethod("eu_courier");
+                    } else {
+                      setShippingMethod("kurier");
+                    }
+                  }}
+                  className="flex h-9 w-full rounded-md border border-warm-gray bg-white px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-forest"
+                >
+                  <option value="PL">{tCountries("PL")}</option>
+                  <option value="DE">{tCountries("DE")}</option>
+                  <option value="CZ">{tCountries("CZ")}</option>
+                  <option value="SK">{tCountries("SK")}</option>
+                  <option value="LT">{tCountries("LT")}</option>
+                  <option value="LV">{tCountries("LV")}</option>
+                  <option value="EE">{tCountries("EE")}</option>
+                  <option value="AT">{tCountries("AT")}</option>
+                  <option value="FR">{tCountries("FR")}</option>
+                  <option value="IT">{tCountries("IT")}</option>
+                  <option value="ES">{tCountries("ES")}</option>
+                  <option value="NL">{tCountries("NL")}</option>
+                  <option value="BE">{tCountries("BE")}</option>
+                  <option value="DK">{tCountries("DK")}</option>
+                  <option value="SE">{tCountries("SE")}</option>
+                  <option value="FI">{tCountries("FI")}</option>
+                </select>
+              </div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <label htmlFor="shippingEmail" className="text-xs font-semibold text-charcoal">
-                  Email *
+                  {t("email")}
                 </label>
                 <Input
                   id="shippingEmail"
@@ -177,21 +239,21 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
               </div>
               <div className="space-y-1.5">
                 <label htmlFor="shippingPhone" className="text-xs font-semibold text-charcoal">
-                  Telefon *
+                  {t("phone")}
                 </label>
                 <Input
                   id="shippingPhone"
                   name="shippingPhone"
                   type="tel"
                   required
-                  placeholder="np. 500 123 456"
+                  placeholder={t("phonePlaceholder")}
                 />
               </div>
             </div>
 
             {shippingMethod === "odbior" ? (
               <div className="p-3 bg-sage/10 rounded-lg border border-forest/20 text-xs text-charcoal/80">
-                Wybrano odbiór osobisty – adres dostawy nie jest wymagany.
+                {t("pickupInfo")}
               </div>
             ) : (
               <>
@@ -236,14 +298,14 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
             
             <div className="space-y-1.5 pt-2">
               <label htmlFor="customerNotes" className="text-xs font-semibold text-charcoal">
-                Uwagi do zamówienia (opcjonalnie)
+                {t("customerNotes")}
               </label>
               <textarea
                 id="customerNotes"
                 name="customerNotes"
                 rows={3}
                 className="flex w-full rounded-md border border-warm-gray bg-white px-3 py-2 text-sm placeholder:text-charcoal/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/50"
-                placeholder="Napisz jeśli masz specjalne życzenia co do kolorów lub detali..."
+                placeholder={t("customerNotesPlaceholder")}
               />
             </div>
           </CardContent>
@@ -260,116 +322,144 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6 space-y-3">
-            {/* Paczkomat */}
-            <div className={`rounded-xl border transition-all ${
-                shippingMethod === "paczkomat"
-                  ? "border-forest ring-1 ring-forest"
-                  : "border-warm-gray"
-              }`}>
-              <label
-                className={`flex items-center justify-between p-4 cursor-pointer rounded-xl ${
-                  shippingMethod === "paczkomat" ? "bg-sage/20" : "hover:border-forest/50"
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <input
-                    type="radio"
-                    name="shippingRadio"
-                    checked={shippingMethod === "paczkomat"}
-                    onChange={() => setShippingMethod("paczkomat")}
-                    className="accent-forest h-4 w-4"
-                  />
-                  <Package className="h-5 w-5 text-forest" />
-                  <div>
-                    <p className="text-sm font-semibold text-charcoal">{t("parcelLocker")}</p>
-                    <p className="text-xs text-charcoal/60">Dostawa w 24-48h do wybranego automatu</p>
-                  </div>
+            {shippingCountry === "PL" ? (
+              <>
+                {/* Paczkomat */}
+                <div className={`rounded-xl border transition-all ${
+                    shippingMethod === "paczkomat"
+                      ? "border-forest ring-1 ring-forest"
+                      : "border-warm-gray"
+                  }`}>
+                  <label
+                    className={`flex items-center justify-between p-4 cursor-pointer rounded-xl ${
+                      shippingMethod === "paczkomat" ? "bg-sage/20" : "hover:border-forest/50"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="shippingRadio"
+                        checked={shippingMethod === "paczkomat"}
+                        onChange={() => setShippingMethod("paczkomat")}
+                        className="accent-forest h-4 w-4"
+                      />
+                      <Package className="h-5 w-5 text-forest" />
+                      <div>
+                        <p className="text-sm font-semibold text-charcoal">{t("parcelLocker")}</p>
+                        <p className="text-xs text-charcoal/60">{t("parcelLockerDesc")}</p>
+                      </div>
+                    </div>
+                    <span className="text-sm font-bold text-forest">12,00 zł</span>
+                  </label>
+                  
+                  {shippingMethod === "paczkomat" && (
+                    <div className="px-4 pb-4 pt-2">
+                      <div className="space-y-1.5 border-t border-forest/20 pt-4">
+                        <label htmlFor="shippingPaczkomat" className="text-xs font-semibold text-charcoal flex justify-between">
+                          <span>{t("parcelLockerCode")}</span>
+                          <a href="https://inpost.pl/znajdz-paczkomat" target="_blank" rel="noopener noreferrer" className="text-forest hover:underline">
+                            {t("findLocker")}
+                          </a>
+                        </label>
+                        <Input
+                          id="shippingPaczkomat"
+                          name="shippingPaczkomat"
+                          required
+                          placeholder={t("parcelLockerPlaceholder")}
+                          className="uppercase"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <span className="text-sm font-bold text-forest">12,00 zł</span>
-              </label>
-              
-              {shippingMethod === "paczkomat" && (
-                <div className="px-4 pb-4 pt-2">
-                  <div className="space-y-1.5 border-t border-forest/20 pt-4">
-                    <label htmlFor="shippingPaczkomat" className="text-xs font-semibold text-charcoal flex justify-between">
-                      <span>Kod Paczkomatu *</span>
-                      <a href="https://inpost.pl/znajdz-paczkomat" target="_blank" rel="noopener noreferrer" className="text-forest hover:underline">
-                        Znajdź paczkomat
-                      </a>
-                    </label>
-                    <Input
-                      id="shippingPaczkomat"
-                      name="shippingPaczkomat"
-                      required
-                      placeholder="np. WAW123M"
-                      className="uppercase"
+
+                {/* Kurier */}
+                <label
+                  className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${
+                    shippingMethod === "kurier"
+                      ? "border-forest bg-sage/20 ring-1 ring-forest"
+                      : "border-warm-gray hover:border-forest/50"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="radio"
+                      name="shippingRadio"
+                      checked={shippingMethod === "kurier"}
+                      onChange={() => setShippingMethod("kurier")}
+                      className="accent-forest h-4 w-4"
                     />
+                    <Truck className="h-5 w-5 text-forest" />
+                    <div>
+                      <p className="text-sm font-semibold text-charcoal">{t("courier")}</p>
+                      <p className="text-xs text-charcoal/60">{t("courierDesc")}</p>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                  <span className="text-sm font-bold text-forest">15,00 zł</span>
+                </label>
 
-            {/* Kurier */}
-            <label
-              className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${
-                shippingMethod === "kurier"
-                  ? "border-forest bg-sage/20 ring-1 ring-forest"
-                  : "border-warm-gray hover:border-forest/50"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <input
-                  type="radio"
-                  name="shippingRadio"
-                  checked={shippingMethod === "kurier"}
-                  onChange={() => setShippingMethod("kurier")}
-                  className="accent-forest h-4 w-4"
-                />
-                <Truck className="h-5 w-5 text-forest" />
-                <div>
-                  <p className="text-sm font-semibold text-charcoal">{t("courier")}</p>
-                  <p className="text-xs text-charcoal/60">Dostawa kurierem pod same drzwi</p>
-                </div>
-              </div>
-              <span className="text-sm font-bold text-forest">15,00 zł</span>
-            </label>
+                {/* Odbiór osobisty */}
+                <div className={`rounded-xl border transition-all ${
+                    shippingMethod === "odbior"
+                      ? "border-forest ring-1 ring-forest"
+                      : "border-warm-gray"
+                  }`}>
+                  <label
+                    className={`flex items-center justify-between p-4 rounded-xl cursor-pointer ${
+                      shippingMethod === "odbior" ? "bg-sage/20" : "hover:border-forest/50"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="shippingRadio"
+                        checked={shippingMethod === "odbior"}
+                        onChange={() => setShippingMethod("odbior")}
+                        className="accent-forest h-4 w-4"
+                      />
+                      <Store className="h-5 w-5 text-forest" />
+                      <div>
+                        <p className="text-sm font-semibold text-charcoal">{t("pickup")}</p>
+                        <p className="text-xs text-charcoal/60">{t("pickupDesc")}</p>
+                      </div>
+                    </div>
+                    <span className="text-sm font-bold text-forest">0,00 zł</span>
+                  </label>
 
-            {/* Odbiór osobisty */}
-            <div className={`rounded-xl border transition-all ${
-                shippingMethod === "odbior"
-                  ? "border-forest ring-1 ring-forest"
-                  : "border-warm-gray"
-              }`}>
+                  {shippingMethod === "odbior" && (
+                    <div className="px-4 pb-4 pt-2">
+                      <div className="p-3 bg-blue-50 text-blue-800 border border-blue-200 rounded-lg text-xs font-medium">
+                        {t("pickupWarning")}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
               <label
-                className={`flex items-center justify-between p-4 rounded-xl cursor-pointer ${
-                  shippingMethod === "odbior" ? "bg-sage/20" : "hover:border-forest/50"
+                className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${
+                  shippingMethod === "eu_courier"
+                    ? "border-forest bg-sage/20 ring-1 ring-forest"
+                    : "border-warm-gray hover:border-forest/50"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <input
                     type="radio"
                     name="shippingRadio"
-                    checked={shippingMethod === "odbior"}
-                    onChange={() => setShippingMethod("odbior")}
+                    checked={shippingMethod === "eu_courier"}
+                    onChange={() => setShippingMethod("eu_courier")}
                     className="accent-forest h-4 w-4"
                   />
-                  <Store className="h-5 w-5 text-forest" />
+                  <Truck className="h-5 w-5 text-forest" />
                   <div>
-                    <p className="text-sm font-semibold text-charcoal">{t("pickup")}</p>
-                    <p className="text-xs text-charcoal/60">Kasia Łaciak (ustalane indywidualnie)</p>
+                    <p className="text-sm font-semibold text-charcoal">{t("euCourier")}</p>
+                    <p className="text-xs text-charcoal/60">{t("euCourierDesc")}</p>
                   </div>
                 </div>
-                <span className="text-sm font-bold text-forest">0,00 zł</span>
+                <span className="text-sm font-bold text-forest">60,00 zł</span>
               </label>
-
-              {shippingMethod === "odbior" && (
-                <div className="px-4 pb-4 pt-2">
-                  <div className="p-3 bg-blue-50 text-blue-800 border border-blue-200 rounded-lg text-xs font-medium">
-                    Ważne: W przypadku odbioru osobistego, prosimy o kontakt ze sprzedawcą w celu ustalenia terminu odbioru.
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -379,7 +469,7 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
           <CardHeader className="border-b border-warm-gray pb-4">
             <CardTitle className="font-serif text-xl font-bold text-forest flex items-center gap-2">
               <Ticket className="h-5 w-5" />
-              Kupon rabatowy
+              {t("couponTitle")}
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 space-y-3">
@@ -387,16 +477,16 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
               <div className="p-3 bg-sage/20 border border-forest/30 rounded-lg flex items-center justify-between">
                 <div>
                   <p className="text-sm font-bold text-forest uppercase">{activeCoupon.code}</p>
-                  <p className="text-xs text-forest/70">Zniżka naliczona</p>
+                  <p className="text-xs text-forest/70">{t("discountApplied")}</p>
                 </div>
-                <Button variant="ghost" size="sm" onClick={removeCoupon} className="text-charcoal hover:text-red-500 h-8 px-2">Usuń</Button>
+                <Button variant="ghost" size="sm" onClick={removeCoupon} className="text-charcoal hover:text-red-500 h-8 px-2">{t("remove")}</Button>
               </div>
             ) : (
               <div className="flex gap-2">
                 <Input 
                   value={couponCode} 
                   onChange={(e) => setCouponCode(e.target.value)} 
-                  placeholder="Twój kod..." 
+                  placeholder={t("yourCode")} 
                   className="uppercase h-9"
                 />
                 <Button 
@@ -405,7 +495,7 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
                   disabled={validatingCoupon || !couponCode.trim()}
                   className="bg-forest hover:bg-forest/90 text-white h-9"
                 >
-                  Dodaj
+                  {t("add")}
                 </Button>
               </div>
             )}
@@ -446,24 +536,24 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
 
             <div className="border-t border-warm-gray pt-4 space-y-2 text-xs text-charcoal/70">
               <div className="flex justify-between">
-                <span>Wartość koszyka:</span>
+                <span>{t("subtotalLabel")}</span>
                 <span className="font-medium text-charcoal">{formatPrice(subtotal)}</span>
               </div>
               
               {currentDiscount > 0 && (
                 <div className="flex justify-between text-forest font-medium">
-                  <span>Zniżka ({activeCoupon?.code}):</span>
+                  <span>{t("discountLabel", { code: activeCoupon?.code || "" })}</span>
                   <span>-{formatPrice(currentDiscount)}</span>
                 </div>
               )}
               
               <div className="flex justify-between">
-                <span>Dostawa ({shippingMethod}):</span>
+                <span>{t("shippingLabel", { method: shippingMethod })}</span>
                 <span className="font-medium text-charcoal">{formatPrice(shippingCost)}</span>
               </div>
               
               <div className="border-t border-warm-gray pt-3 flex justify-between items-baseline text-sm">
-                <span className="font-serif font-bold text-charcoal text-base">Razem do zapłaty:</span>
+                <span className="font-serif font-bold text-charcoal text-base">{t("totalLabel")}</span>
                 <span className="font-serif font-bold text-xl text-forest">{formatPrice(grandTotal)}</span>
               </div>
             </div>
@@ -479,24 +569,24 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
                   />
                 </div>
                 <div className="text-xs text-charcoal/70 leading-relaxed">
-                  Akceptuję <Link href="/regulamin" className="underline hover:text-forest transition-colors" target="_blank">Regulamin sklepu</Link> oraz zgadzam się z <Link href="/polityka-prywatnosci" className="underline hover:text-forest transition-colors" target="_blank">Polityką Prywatności</Link>. Rozumiem, że towary tworzone na zamówienie według mojej specyfikacji mogą mieć ograniczony lub wyłączony zwrot, zgodnie z informacjami w regulaminie. *
+                  {t("termsPrefix")} <Link href="/regulamin" className="underline hover:text-forest transition-colors" target="_blank">{t("termsLink")}</Link> {t("termsMiddle")} <Link href="/polityka-prywatnosci" className="underline hover:text-forest transition-colors" target="_blank">{t("privacyLink")}</Link>{t("termsSuffix")}
                 </div>
               </label>
 
               <Button
                 type="submit"
-                disabled={isPending || !termsAccepted}
+                disabled={isPending || isValidatingPaczkomat || !termsAccepted}
                 size="lg"
                 className="w-full bg-forest hover:bg-forest/90 text-white font-medium shadow-md h-12 text-sm"
               >
                 <Lock className="h-4 w-4 mr-2" />
-                <span>{isPending ? "Łączenie z bramką płatności..." : "Zamawiam z obowiązkiem zapłaty"}</span>
+                <span>{isValidatingPaczkomat ? t("validatingPaczkomat") : isPending ? t("connectingPayment") : t("orderAndPay")}</span>
               </Button>
             </div>
 
             <div className="text-center">
               <p className="text-[11px] text-charcoal/50 leading-relaxed">
-                Płatność kartą lub BLIK. Dane są w pełni szyfrowane przez Stripe.
+                {t("paymentInfo")}
               </p>
             </div>
           </CardContent>
@@ -505,4 +595,3 @@ export function CheckoutClientForm({ user }: CheckoutClientFormProps) {
     </form>
   );
 }
-

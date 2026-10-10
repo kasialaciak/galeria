@@ -1,6 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { updateUserProfile } from "@/actions/orders";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +16,7 @@ interface AccountProfileFormProps {
 }
 
 export function AccountProfileForm({ user }: AccountProfileFormProps) {
+  const t = useTranslations("Account");
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,9 +26,9 @@ export function AccountProfileForm({ user }: AccountProfileFormProps) {
     startTransition(async () => {
       const res = await updateUserProfile(formData);
       if (res.success) {
-        toast.success("Dane osobowe zostały zaktualizowane");
+        toast.success(t("profileUpdated"));
       } else {
-        toast.error(res.error || "Wystąpił błąd");
+        toast.error(res.error || t("errorOccurred"));
       }
     });
   };
@@ -35,7 +37,7 @@ export function AccountProfileForm({ user }: AccountProfileFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-1.5">
         <label className="text-xs font-semibold text-charcoal">
-          Adres email (login)
+          {t("emailLabel")}
         </label>
         <Input
           type="email"
@@ -47,27 +49,27 @@ export function AccountProfileForm({ user }: AccountProfileFormProps) {
 
       <div className="space-y-1.5">
         <label htmlFor="name" className="text-xs font-semibold text-charcoal">
-          Imię i nazwisko
+          {t("nameLabel")}
         </label>
         <Input
           id="name"
           name="name"
           defaultValue={user.name || ""}
           required
-          placeholder="Twoje imię i nazwisko"
+          placeholder={t("namePlaceholder")}
           className="text-xs"
         />
       </div>
 
       <div className="space-y-1.5">
         <label htmlFor="phone" className="text-xs font-semibold text-charcoal">
-          Numer telefonu
+          {t("phoneLabel")}
         </label>
         <Input
           id="phone"
           name="phone"
           defaultValue={user.phone || ""}
-          placeholder="+48 123 456 789"
+          placeholder={t("phonePlaceholder")}
           className="text-xs"
         />
       </div>
@@ -77,7 +79,7 @@ export function AccountProfileForm({ user }: AccountProfileFormProps) {
         disabled={isPending}
         className="w-full bg-forest hover:bg-forest/90 text-white text-xs h-9"
       >
-        {isPending ? "Zapisywanie..." : "Zapisz zmiany"}
+        {isPending ? t("saving") : t("saveChanges")}
       </Button>
     </form>
   );

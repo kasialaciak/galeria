@@ -6,6 +6,8 @@ import { ReviewForm } from "./review-form";
 import type { ReviewItem } from "@/actions/reviews";
 import { Link } from "@/i18n/routing";
 
+import { useTranslations, useLocale } from "next-intl";
+
 interface ProductTabsProps {
   productId: string;
   reviews: ReviewItem[];
@@ -28,6 +30,8 @@ export function ProductTabs({
   specifications = [],
 }: ProductTabsProps) {
   const [activeTab, setActiveTab] = useState<"reviews" | "specs">("reviews");
+  const t = useTranslations("ProductTabs");
+  const locale = useLocale();
 
   return (
     <div className="mt-12 pt-8 border-t border-warm-gray">
@@ -42,7 +46,7 @@ export function ProductTabs({
               : "text-charcoal/50 hover:text-charcoal"
           }`}
         >
-          <span>Opinie klientów</span>
+          <span>{t("reviewsTab")}</span>
           <span className="text-xs font-sans px-2 py-0.5 rounded-full bg-sage/30 text-forest">
             {totalReviews}
           </span>
@@ -57,7 +61,7 @@ export function ProductTabs({
               : "text-charcoal/50 hover:text-charcoal"
           }`}
         >
-          <span>Specyfikacja produktu</span>
+          <span>{t("specsTab")}</span>
           {specifications.length > 0 && (
             <span className="text-xs font-sans px-2 py-0.5 rounded-full bg-sage/30 text-forest">
               {specifications.length}
@@ -76,7 +80,7 @@ export function ProductTabs({
                 <span className="font-serif text-4xl sm:text-5xl font-bold text-forest">
                   {averageRating > 0 ? averageRating.toFixed(1) : "0.0"}
                 </span>
-                <span className="text-xs text-charcoal/50 block mt-0.5">z 5 gwiazdek</span>
+                <span className="text-xs text-charcoal/50 block mt-0.5">{t("from5Stars")}</span>
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-1">
@@ -92,7 +96,7 @@ export function ProductTabs({
                   ))}
                 </div>
                 <p className="text-xs text-charcoal/70">
-                  Łącznie opinii: <strong className="text-forest">{totalReviews}</strong>
+                  {t("totalReviews")} <strong className="text-forest">{totalReviews}</strong>
                 </p>
               </div>
             </div>
@@ -100,7 +104,7 @@ export function ProductTabs({
             <div className="text-xs text-charcoal/70 flex items-center gap-2 bg-white/70 p-3 rounded-lg border border-warm-gray/60">
               <ShieldCheck className="h-4 w-4 text-forest shrink-0" />
               <span>
-                Wszystkie opinie pochodzą od zweryfikowanych klientów, którzy zakupili ten produkt.
+                {t("verifiedNotice")}
               </span>
             </div>
           </div>
@@ -114,14 +118,14 @@ export function ProductTabs({
               <div>
                 {!isLoggedIn ? (
                   <span>
-                    Chcesz dodać opinię?{" "}
+                    {t("wantToReview")}{" "}
                     <Link href="/konto" className="font-semibold text-forest underline">
-                      Zaloguj się na swoje konto
+                      {t("loginToReview")}
                     </Link>
-                    . Opinie mogą dodawać wyłącznie klienci po zakupie tego produktu.
+                    . {t("reviewOnlyBuyers")}
                   </span>
                 ) : (
-                  <span>{canReviewReason || "Opinie mogą dodawać wyłącznie zweryfikowani klienci po zakupie."}</span>
+                  <span>{canReviewReason || t("reviewOnlyVerified")}</span>
                 )}
               </div>
             </div>
@@ -130,8 +134,8 @@ export function ProductTabs({
           {/* Lista wystawionych opinii */}
           {reviews.length === 0 ? (
             <div className="text-center py-12 text-charcoal/50 space-y-2">
-              <p className="text-sm font-medium">Brak opinii dla tego produktu</p>
-              <p className="text-xs">Bądź pierwszą osobą, która podzieli się wrażeniami po zakupie!</p>
+              <p className="text-sm font-medium">{t("noReviews")}</p>
+              <p className="text-xs">{t("beTheFirst")}</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -158,12 +162,12 @@ export function ProductTabs({
                         {rev.userName}
                       </span>
                       <span className="inline-flex items-center gap-0.5 text-[10px] text-forest bg-sage/20 px-1.5 py-0.5 rounded-full font-medium">
-                        <UserCheck className="h-3 w-3" /> Kupujący
+                        <UserCheck className="h-3 w-3" /> {t("buyer")}
                       </span>
                     </div>
 
                     <span className="text-[11px] text-charcoal/50">
-                      {new Date(rev.createdAt).toLocaleDateString("pl-PL", {
+                      {new Date(rev.createdAt).toLocaleDateString(locale === "en" ? "en-US" : "pl-PL", {
                         day: "numeric",
                         month: "long",
                         year: "numeric",
@@ -208,8 +212,8 @@ export function ProductTabs({
             </div>
           ) : (
             <div className="text-center py-12 text-charcoal/50 space-y-2">
-              <p className="text-sm font-medium">Brak dodatkowych szczegółów specyfikacji</p>
-              <p className="text-xs">Informacje o materiałach i wykonaniu znajdziesz w opisie powyżej.</p>
+              <p className="text-sm font-medium">{t("noSpecs")}</p>
+              <p className="text-xs">{t("specsInfo")}</p>
             </div>
           )}
         </div>

@@ -33,6 +33,7 @@ export async function createProductAction(formData: FormData) {
   const parentProductId = (formData.get("parentProductId") as string) || null;
   const variantLabelPl = (formData.get("variantLabelPl") as string) || null;
   const variantLabelEn = (formData.get("variantLabelEn") as string) || null;
+  const workTime = (formData.get("workTime") as string) || null;
   
   const isPublished = formData.get("isPublished") === "on";
   const isFeatured = formData.get("isFeatured") === "on";
@@ -83,6 +84,7 @@ export async function createProductAction(formData: FormData) {
         parentProductId: parentProductId === "none" ? null : parentProductId,
         variantLabelPl,
         variantLabelEn: variantLabelEn || variantLabelPl,
+        workTime,
         specifications,
         isPublished,
         isFeatured,
@@ -164,5 +166,91 @@ export async function getAdminProductsList() {
   } catch (error) {
     console.warn("Could not query admin products:", error);
     return [];
+  }
+}
+
+export async function updateProductAction(productId: string, formData: FormData) {
+  const session = await auth();
+  if ((session?.user as any)?.role !== "admin") {
+    return { success: false, error: "Brak uprawnien administratora" };
+  }
+
+  const namePl = formData.get("namePl") as string;
+  const nameEn = formData.get("nameEn") as string;
+  const descriptionPl = formData.get("descriptionPl") as string;
+  const descriptionEn = formData.get("descriptionEn") as string;
+  const priceZloty = parseFloat(formData.get("price") as string);
+  const compareAtPriceZloty = parseFloat(formData.get("compareAtPrice") as string);
+  const categoryId = (formData.get("categoryId") as string) || null;
+  const parentProductId = (formData.get("parentProductId") as string) || null;
+  const variantLabelPl = (formData.get("variantLabelPl") as string) || null;
+  const variantLabelEn = (formData.get("variantLabelEn") as string) || null;
+  const workTime = (formData.get("workTime") as string) || null;
+  
+  const isPublished = formData.get("isPublished") === "on";
+  const isFeatured = formData.get("isFeatured") === "on";
+
+  const imageUrlsRaw = formData.get("imageUrls") as string;
+  const imageUrls = imageUrlsRaw
+    ? imageUrlsRaw
+        .split("\n")
+        .map((u) => u.trim())
+        .filter((u) => u.length > 0)
+    : [];
+
+  if (!namePl || isNaN(priceZloty)) {
+    return { success: false, error: "Podaj prawidlowa nazwe i cene produktu" };
+  }
+
+  const priceInGrosze = Math.round(priceZloty * 100);
+  const compareAtInGrosze = !isNaN(compareAtPriceZloty)
+    ? Math.round(compareAtPriceZloty * 100)
+    : null;
+
+  const slug = slugify(namePl);
+
+  try {
+    await db
+      .update(products)
+      .set({
+        namePl,
+        nameEn: nameEn || namePl,
+        slug,
+        descriptionPl,
+        descriptionEn: descriptionEn || descriptionPl,
+        price: priceInGrosze,
+        compareAtPrice: compareAtInGrosze,
+        categoryId: categoryId === "none" ? null : categoryId,
+        parentProductId: parentProductId === "none" ? null : parentProductId,
+        variantLabelPl,
+        variantLabelEn: variantLabelEn || variantLabelPl,
+        workTime,
+        isPublished,
+        isFeatured,
+      })
+      .where(eq(products.id, productId));
+
+    // Usuń stare zdjęcia i dodaj nowe
+    await db.delete(productImages).where(eq(productImages.productId, productId));
+    
+    if (imageUrls.length > 0) {
+      await db.insert(productImages).values(
+        imageUrls.map((url, idx) => ({
+          productId: productId,
+          url,
+          sortOrder: idx,
+        }))
+      );
+    }
+
+    revalidatePath("/admin/produkty");
+    revalidatePath(`/admin/produkty/${productId}`);
+    revalidatePath("/produkty");
+    revalidatePath("/");
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error updating product:", error);
+    return { success: false, error: "Blad podczas aktualizacji produktu w bazie" };
   }
 }
